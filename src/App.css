@@ -1,38 +1,134 @@
-.App {
-  text-align: center;
+#App {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  top: 0;
+}
+/* no warp text */
+.warp-text {
+  word-wrap: break-word;
+}
+/* stacked progress on hover */
+.highlight:hover {
+  box-shadow: inset 0 0 15px white;
+  cursor: pointer;
+}
+/* sidebar grid */
+.grid-container {
+  background-color: white;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto 1fr;
+  height: 100%;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.infosidebarbutton {
+  padding: 5px;
+  grid-column-start: 1;
+  grid-row-start: 1;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.infosidebar {
+  /* background-color: #E6BB48; */
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  grid-column-start: 2;
+  grid-row-start: 2;
+  width: 100%;
+  height: 100%;
+  padding: 5px;
 }
 
-.App-link {
-  color: #61dafb;
+.infotoolbar {
+  /* background-color: #66DA81; */
+  grid-column-start: 1;
+  grid-row-start: 2;
+  width: 100%;
+  height: 100%;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.infotitlebar {
+  /* background-color: #3f3de6;  */
+  grid-column-start: 2;
+  grid-row-start: 1;
+  text-align: center;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
+
+/* sidebar hack */
+.ui.sidebar.with-toolbar {
+  width: calc(100% / 2.2);
+  max-width: 740px;
+  overflow-y: visible;
+}
+
+.ui.overlay.sidebar.with-toolbar {
+  transform: translate3d(calc(100% - 49.5333px ), 0%, 0);
+  visibility: visible;
+  box-shadow: none;
+}
+
+.ui.visible.overlay.sidebar.with-toolbar {
+  transform: translate3d(0%, 0%, 0);
+  visibility: visible;
+  box-shadow: none;
+}
+
+/* progress bar hack */
+.ui.reverse-indicating.progress[data-percent^="1"] .bar,
+.ui.reverse-indicating.progress[data-percent^="2"] .bar {
+  background-color: #66DA81;
+}
+.ui.reverse-indicating.progress[data-percent^="3"] .bar {
+  background-color: #B4D95C;
+}
+.ui.reverse-indicating.progress[data-percent^="4"] .bar,
+.ui.reverse-indicating.progress[data-percent^="5"] .bar {
+  background-color: #DDC928;
+}
+.ui.reverse-indicating.progress[data-percent^="6"] .bar {
+  background-color: #E6BB48;
+}
+.ui.reverse-indicating.progress[data-percent^="7"] .bar,
+.ui.reverse-indicating.progress[data-percent^="8"] .bar {
+  background-color: #EFBC72;
+}
+.ui.reverse-indicating.progress[data-percent^="9"] .bar,
+.ui.reverse-indicating.progress[data-percent^="100"] .bar {
+  background-color: #D95C5C;
+}
+/* med 32px */
+.react-flow__node-container {
+  /* border: '1px solid #777'; */
+  /* padding: 10; */
+  /* width: '300px'; */
+  padding: 30px 10px 10px 10px;
+  border-radius: 5px;
+  /* width: 30vh; */
+  width: 300px;
+  /* height: 300px; */
+  font-size: 12px;
+  color: #222;
+  border-width: 1px;
+  border-style: solid;
+}
+
+/* 
+.updatenode__controls {
+  font-size:12px;
+  position:absolute;
+  right:10px;
+  top:10px;
+  z-index:4
+ }
+
+ .updatenode__controls label {
+  display:block
+ } */

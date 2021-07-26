@@ -1,24 +1,26 @@
-import logo from './logo.svg';
+import React, { useEffect } from 'react';
+import { RecoilRoot, useRecoilSnapshot } from 'recoil';
 import './App.css';
+import Main from './components/pages/Main'
 
-function App() {
+
+function DebugObserver() {
+  const snapshot = useRecoilSnapshot();
+  useEffect(() => {
+    console.debug('The following atoms were modified:');
+    for (const node of snapshot.getNodes_UNSTABLE({ isModified: true })) {
+      console.debug(node.key, snapshot.getLoadable(node));
+    }
+  }, [snapshot]);
+  return null;
+};
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <RecoilRoot>
+      {/* <DebugObserver /> */}
+      <Main />
+    </RecoilRoot>
   );
 }
 
