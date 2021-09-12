@@ -1,10 +1,39 @@
-#App {
-  position: fixed;
-  height: 100%;
-  width: 100%;
-  left: 0;
-  top: 0;
+html, body {
+  padding: 0;
+  margin: 0;
 }
+
+.app {
+  display: flex;
+  align-items: stretch;
+  height: 100vh;
+}
+
+/* flex tab for sidebar */
+.flex-tab {
+  flex: 1;
+  flex-direction: column;
+  display: flex;
+  align-self: flex-start;
+  /* overflow: auto; */
+  overflow-y: auto;
+  /* width: 100%; */
+}
+
+.flex-box {
+  display: flex;
+  flex-direction: column;
+  min-height: min-content;
+  /* align-items: flex-start; */
+  /* flex: 1 1 auto; */
+  /* overflow-y: auto; */
+  /* height: 100px; */
+}
+/* height */
+.terminal-height {
+  height: 100%;
+}
+
 /* no warp text */
 .warp-text {
   word-wrap: break-word;
@@ -15,42 +44,32 @@
   cursor: pointer;
 }
 /* sidebar grid */
-.grid-container {
+.grid-container {  
   background-color: white;
   display: grid;
-  grid-template-columns: auto 1fr;
-  grid-template-rows: auto 1fr;
+  grid-template-columns: minmax(100px,1fr);
+  grid-template-rows: auto minmax(100px,1fr);
   height: 100%;
-}
-
-.infosidebarbutton {
-  padding: 5px;
-  grid-column-start: 1;
-  grid-row-start: 1;
+  padding: 0px 12px;
+  overflow: hidden;
 }
 
 .infosidebar {
   /* background-color: #E6BB48; */
   display: flex;
   flex-direction: column;
-  grid-column-start: 2;
-  grid-row-start: 2;
-  width: 100%;
-  height: 100%;
-  padding: 5px;
-}
-
-.infotoolbar {
-  /* background-color: #66DA81; */
   grid-column-start: 1;
   grid-row-start: 2;
   width: 100%;
   height: 100%;
+  padding: 12px;
 }
+
 
 .infotitlebar {
   /* background-color: #3f3de6;  */
-  grid-column-start: 2;
+  padding: 12px;
+  grid-column-start: 1;
   grid-row-start: 1;
   text-align: center;
   display:flex;
@@ -64,21 +83,21 @@
 
 /* sidebar hack */
 .ui.sidebar.with-toolbar {
-  width: calc(100% / 2.2);
+  background-color: white;
+  width: calc(100% / 2.5);
   max-width: 740px;
   overflow-y: visible;
 }
 
 .ui.overlay.sidebar.with-toolbar {
-  transform: translate3d(calc(100% - 49.5333px ), 0%, 0);
   visibility: visible;
-  box-shadow: none;
+  /* box-shadow: none; */
 }
 
 .ui.visible.overlay.sidebar.with-toolbar {
   transform: translate3d(0%, 0%, 0);
   visibility: visible;
-  box-shadow: none;
+  /* box-shadow: none; */
 }
 
 /* progress bar hack */
@@ -104,31 +123,24 @@
 .ui.reverse-indicating.progress[data-percent^="100"] .bar {
   background-color: #D95C5C;
 }
-/* med 32px */
+
+/* node css */
 .react-flow__node-container {
-  /* border: '1px solid #777'; */
-  /* padding: 10; */
-  /* width: '300px'; */
   padding: 30px 10px 10px 10px;
   border-radius: 5px;
-  /* width: 30vh; */
   width: 300px;
-  /* height: 300px; */
-  font-size: 12px;
-  color: #222;
+  color: rgba(0, 0, 0, 0.87);
+  background-color: white;
   border-width: 1px;
   border-style: solid;
 }
 
-/* 
-.updatenode__controls {
-  font-size:12px;
-  position:absolute;
-  right:10px;
-  top:10px;
-  z-index:4
- }
-
- .updatenode__controls label {
-  display:block
- } */
+.react-flow__node-network {
+  padding: 10px 10px 10px 10px;
+  border-radius: 5px;
+  width: 300px;
+  color: rgba(0, 0, 0, 0.87);
+  background-color: white;
+  border-width: 1px;
+  border-style: solid;
+}
