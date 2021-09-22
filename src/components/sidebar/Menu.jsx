@@ -9,6 +9,7 @@ import OverviewPanel from "./panel/OverviewPanel";
 import AttachPanel from "./panel/AttachPanel";
 import StatusPanel from "./panel/StatusPanel";
 import AddImage from "./model/AddImage";
+import AddContainer from "./model/AddContainer";
 
 const menuItems = [
   {
@@ -51,21 +52,21 @@ const menuItems = [
   { key: "inspect", type: "container", name: "Inspect", icon: "search" },
   { key: "setting", type: "container", name: "Settings", icon: "wrench" },
 
-  // {
-  //   key: "CreateContainer",
-  //   type: "action",
-  //   name: "Create Container",
-  //   icon: "dice d6",
-  //   cornerIcon: "add",
-  //   panel: (trigger) => {},
-  // },
+  {
+    key: "CreateContainer",
+    type: "action",
+    name: "Create Container",
+    icon: "dice d6",
+    cornerIcon: "add",
+    panel: (trigger) => <AddContainer trigger={trigger} />,
+  },
   {
     key: "CreateImage",
     type: "action",
     name: "Create Images",
     icon: "window restore",
     cornerIcon: "add",
-    panel: (trigger) => createElement(AddImage, { trigger }, null),
+    panel: (trigger) => <AddImage trigger={trigger} />,
   },
 ];
 // eslint-disable-next-line react/prop-types

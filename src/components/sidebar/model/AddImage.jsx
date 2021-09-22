@@ -7,6 +7,7 @@ import {
   Tab,
   Header,
   Button,
+  Form
 } from "semantic-ui-react";
 
 const panes = [
@@ -17,7 +18,18 @@ const panes = [
         Pull from registry
       </Menu.Item>
     ),
-    render: () => <Tab.Pane>pull</Tab.Pane>,
+    render: () =>
+      <Tab.Pane>
+        <Form>
+          <Form.Group inline>
+            <Form.Input label='Registry' placeholder="docker.io" width='16' />
+          </Form.Group>
+          <Form.Group inline>
+            <Form.Input label='Image' placeholder="hello-world:latest" width='16' />
+          </Form.Group>
+          <Button type="submit" positive>Pull</Button>
+        </Form>
+      </Tab.Pane>
   },
   {
     menuItem: (
@@ -45,7 +57,7 @@ const panes = [
         Editor
       </Menu.Item>
     ),
-    render: () => <Tab.Pane>editor</Tab.Pane>,
+    render: () => <Tab.Pane>Monaco editor here</Tab.Pane>,
   },
 ];
 
@@ -65,34 +77,6 @@ const AddImage = ({ trigger }) => (
           menu={{ pointing: true, widths: "3", icon: "labeled" }}
           panes={panes}
         />
-        {/* <Menu widths="3" icon="labeled" pointing>
-            <Menu.Item name="editor">
-              <Icon name="download" />
-              Pull from registry
-            </Menu.Item>
-            <Menu.Item name="dockerfile" active>
-              <Icon name="upload" />
-              Upload tar/zip
-            </Menu.Item>
-            <Menu.Item name="editor">
-              <Icon name="code" />
-              Editor
-            </Menu.Item>
-          </Menu>
-          <Segment>
-            <img
-              alt=""
-              src="https://react.semantic-ui.com/images/wireframe/paragraph.png"
-            />
-            <img
-              alt=""
-              src="https://react.semantic-ui.com/images/wireframe/paragraph.png"
-            />
-            <img
-              alt=""
-              src="https://react.semantic-ui.com/images/wireframe/paragraph.png"
-            />
-          </Segment> */}
       </Modal.Content>
     </Modal>
   </>
