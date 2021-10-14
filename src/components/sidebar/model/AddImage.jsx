@@ -7,7 +7,7 @@ import {
   Tab,
   Header,
   Button,
-  Form
+  Form,
 } from "semantic-ui-react";
 
 const panes = [
@@ -18,18 +18,25 @@ const panes = [
         Pull from registry
       </Menu.Item>
     ),
-    render: () =>
+    render: () => (
       <Tab.Pane>
         <Form>
           <Form.Group inline>
-            <Form.Input label='Registry' placeholder="docker.io" width='16' />
+            <Form.Input label="Registry" placeholder="docker.io" width="16" />
           </Form.Group>
           <Form.Group inline>
-            <Form.Input label='Image' placeholder="hello-world:latest" width='16' />
+            <Form.Input
+              label="Image"
+              placeholder="hello-world:latest"
+              width="16"
+            />
           </Form.Group>
-          <Button type="submit" positive>Pull</Button>
+          <Button type="submit" positive>
+            Pull
+          </Button>
         </Form>
       </Tab.Pane>
+    ),
   },
   {
     menuItem: (
