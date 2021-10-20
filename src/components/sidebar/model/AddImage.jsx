@@ -21,10 +21,10 @@ const panes = [
     render: () => (
       <Tab.Pane>
         <Form>
-          <Form.Group inline>
+          <Form.Group>
             <Form.Input label="Registry" placeholder="docker.io" width="16" />
           </Form.Group>
-          <Form.Group inline>
+          <Form.Group>
             <Form.Input
               label="Image"
               placeholder="hello-world:latest"

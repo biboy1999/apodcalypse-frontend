@@ -22,6 +22,7 @@ module.exports = {
     "no-nested-ternary": 0,
     "no-unused-vars": "warn",
     "no-console": "off",
+    "react/jsx-props-no-spreading": 0,
     quotes: 0,
     indent: 0,
   },

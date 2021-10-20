@@ -58,7 +58,9 @@ const menuItems = [
     name: "Create Container",
     icon: "dice d6",
     cornerIcon: "add",
-    panel: (trigger) => <AddContainer trigger={trigger} />,
+    panel: (trigger) => (
+      <AddContainer key="CreateContainer" trigger={trigger} />
+    ),
   },
   {
     key: "CreateImage",
@@ -66,7 +68,7 @@ const menuItems = [
     name: "Create Images",
     icon: "window restore",
     cornerIcon: "add",
-    panel: (trigger) => <AddImage trigger={trigger} />,
+    panel: (trigger) => <AddImage key="CreateImage" trigger={trigger} />,
   },
 ];
 // eslint-disable-next-line react/prop-types
