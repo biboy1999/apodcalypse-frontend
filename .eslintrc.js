@@ -13,7 +13,7 @@ module.exports = {
   },
   plugins: ["prettier"],
   rules: {
-    "prettier/prettier": ["warn", { trailingComma: "all" }],
+    "prettier/prettier": ["warn", { trailingComma: "all", endOfLine: "auto" }],
     "no-underscore-dangle": "off",
     "no-plusplus": "off",
     "react/forbid-prop-types": "off",
