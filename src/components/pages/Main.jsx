@@ -11,25 +11,39 @@ import { selectedMenuItemState } from "../../recoil/Menu";
 const Main = () => {
   const selectedMenuItem = useRecoilValue(selectedMenuItemState);
 
-  // const ws = useRef(null);
-  // useEffect(() => {
-  //     ws.current = io('http://localhost:8081')
-  //     ws.current.on('connect', () => {
-  //         console.log(ws.current.id);
-  //     });
-  //     ws.current.on('monitor', (data) => {
-  //         console.log(data);
-  //         setContainerList(data);
-  //     });
+  const ws = useRef(null);
+  useEffect(() => {
+    ws.current = io("http://localhost:4636/containers");
+    ws.current.on("connect", () => {
+      console.log(ws.current.id);
+    });
 
-  //     return () => {
-  //         ws.current.disconnect();
-  //     };
-  // }, [setContainerList]);
+    ws.current.on("list", (args) => {
+      console.log(args);
+    });
+
+    // return () => {
+    //   ws.current.disconnect();
+    // };
+  }, []);
+
+  // useEffect(() => {
+  //   ws.current.emit("list", {all: true});
+  // }, []);
 
   return (
     <>
       <div className="app">
+        <button
+          type="button"
+          onClick={() =>
+            ws.current.emit("list", { all: true }, (ack) => {
+              console.log(ack);
+            })
+          }
+        >
+          test
+        </button>
         <Sidebar.Pushable style={{ flexGrow: "1" }}>
           <Sidebar
             animation="overlay"
