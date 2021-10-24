@@ -26,6 +26,12 @@ const graphNodesState = selector({
     const containerInspectList = get(containerInspcetListState);
     const containerStatsList = get(containerStatsListState);
 
+    if (!Array.isArray(containerList) || !containerList.length) return [];
+    if (!Array.isArray(containerInspectList) || !containerInspectList.length)
+      return [];
+    if (!Array.isArray(containerStatsList) || !containerStatsList.length)
+      return [];
+
     const containerNode = containerList.map((container) => {
       const containerInspect = containerInspectList[container.Id];
       const containerStats = containerStatsList[container.Id];
@@ -53,15 +59,14 @@ const graphNodesState = selector({
         type: "container",
         data: {
           id: container.Id,
-          name: container.Names.join(","),
-          status: container.Status,
-          healthyStatus: containerInspect?.State.Health?.Status,
-          cpu,
-          memory,
-          totalMemory,
+          name: container.Name,
+          status: container.State.Status,
+          // healthyStatus: containerInspect?.State.Health?.Status,
+          // cpu,
+          // memory,
+          // totalMemory,
           processCount: null,
-          ports: container.Ports,
-          networks: container.NetworkSettings.Networks,
+          networkSettings: container.NetworkSettings,
         },
       };
     });

@@ -25,7 +25,7 @@ const updateLayout = async (elements) => {
     if (isNode(el)) {
       const portList =
         el.__rf?.handleBounds.source ?? el.__rf?.handleBounds.target ?? [];
-      console.log(el.__rf?.handleBounds);
+      // console.log(el.__rf?.handleBounds);
       nodes.push({
         id: el.id,
         // eslint-disable-next-line no-underscore-dangle
@@ -49,7 +49,7 @@ const updateLayout = async (elements) => {
         ],
       });
     } else {
-      console.log(el);
+      // console.log(el);
       edges.push({
         id: el.id,
         sourcePort: `${el.source}-${el.target}`,

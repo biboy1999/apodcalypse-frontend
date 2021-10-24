@@ -8,7 +8,7 @@ import {
 
 const containerListState = atom({
   key: "containerListState",
-  default: containerListData,
+  default: [],
 });
 
 const containerInspcetListState = atom({

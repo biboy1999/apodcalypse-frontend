@@ -1,49 +1,47 @@
 import React, { useEffect, useRef } from "react";
 import { io } from "socket.io-client";
 import { Sidebar } from "semantic-ui-react";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { ReactFlowProvider } from "react-flow-renderer";
 import SidebarPanel from "../sidebar/Sidebar";
 import GraphBoard from "../flowboard/GraphBoard";
 import SidebarMenu from "../sidebar/Menu";
 import { selectedMenuItemState } from "../../recoil/Menu";
+import { containerListState } from "../../recoil/Container";
 
 const Main = () => {
   const selectedMenuItem = useRecoilValue(selectedMenuItemState);
 
+  const setContainerListState = useSetRecoilState(containerListState);
+
   const ws = useRef(null);
   useEffect(() => {
-    ws.current = io("http://localhost:4636/containers");
+    ws.current = io("http://192.168.43.115:4636/containers");
     ws.current.on("connect", () => {
       console.log(ws.current.id);
     });
 
-    ws.current.on("list", (args) => {
-      console.log(args);
-    });
-
-    // return () => {
-    //   ws.current.disconnect();
-    // };
+    return () => {
+      ws.current.disconnect();
+    };
   }, []);
 
-  // useEffect(() => {
-  //   ws.current.emit("list", {all: true});
-  // }, []);
+  useEffect(() => {
+    const timer = setInterval(() => {
+      ws.current.emit("list", { all: true }, (ack) => {
+        console.log(ack);
+        setContainerListState(ack);
+      });
+    }, 5000);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
 
   return (
     <>
       <div className="app">
-        <button
-          type="button"
-          onClick={() =>
-            ws.current.emit("list", { all: true }, (ack) => {
-              console.log(ack);
-            })
-          }
-        >
-          test
-        </button>
         <Sidebar.Pushable style={{ flexGrow: "1" }}>
           <Sidebar
             animation="overlay"
