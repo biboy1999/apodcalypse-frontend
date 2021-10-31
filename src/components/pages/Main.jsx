@@ -7,41 +7,76 @@ import SidebarPanel from "../sidebar/Sidebar";
 import GraphBoard from "../flowboard/GraphBoard";
 import SidebarMenu from "../sidebar/Menu";
 import { selectedMenuItemState } from "../../recoil/Menu";
-import { containerListState } from "../../recoil/Container";
+import {
+  containerListState,
+  containerNetworkListState,
+  containerStatsListState,
+} from "../../recoil/Container";
+import StatusNag from "../StatusNag";
 
 const Main = () => {
   const selectedMenuItem = useRecoilValue(selectedMenuItemState);
 
   const setContainerListState = useSetRecoilState(containerListState);
+  const setContainerStatsListState = useSetRecoilState(containerStatsListState);
+  const setContainerNetworkListState = useSetRecoilState(
+    containerNetworkListState,
+  );
 
-  const ws = useRef(null);
+  const wsContainer = useRef(null);
+  const wsNetwork = useRef(null);
+  // const wsImage = useRef(null);
+
   useEffect(() => {
-    ws.current = io("http://192.168.43.115:4636/containers");
-    ws.current.on("connect", () => {
-      console.log(ws.current.id);
+    wsContainer.current = io("http://127.0.0.1:4636/containers");
+    wsContainer.current.on("connect", () => {
+      console.log(wsContainer.current.id);
     });
 
-    return () => {
-      ws.current.disconnect();
-    };
-  }, []);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      ws.current.emit("list", { all: true }, (ack) => {
-        console.log(ack);
+    const listTimer = setInterval(() => {
+      wsContainer.current.volatile.emit("list", { all: true }, (ack) => {
+        // console.log(ack);
         setContainerListState(ack);
       });
     }, 5000);
 
+    const statsTimer = setInterval(() => {
+      wsContainer.current.volatile.emit("list_stats", (ack) => {
+        // console.log(ack);
+        setContainerStatsListState(ack);
+      });
+    }, 7000);
+
     return () => {
-      clearInterval(timer);
+      clearInterval(listTimer);
+      clearInterval(statsTimer);
+      wsContainer.current.disconnect();
+    };
+  }, []);
+
+  useEffect(() => {
+    wsNetwork.current = io("http://127.0.0.1:4636/networks");
+    wsNetwork.current.on("connect", () => {
+      console.log(wsNetwork.current.id);
+    });
+
+    const listTimer = setInterval(() => {
+      wsNetwork.current.volatile.emit("list", {}, (ack) => {
+        // console.log(ack);
+        setContainerNetworkListState(ack);
+      });
+    }, 3000);
+
+    return () => {
+      clearInterval(listTimer);
+      wsNetwork.current.disconnect();
     };
   }, []);
 
   return (
     <>
       <div className="app">
+        <StatusNag />
         <Sidebar.Pushable style={{ flexGrow: "1" }}>
           <Sidebar
             animation="overlay"

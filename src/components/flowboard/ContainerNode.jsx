@@ -67,9 +67,14 @@ const ContainerNode = ({ data }) => (
               const [privatePort, type] = id.split("/");
               return (
                 <Grid.Row
-                  key={`${data.id}-${value?.HostIp}-${privatePort}:${value?.HostPort}/${type}`}
+                  key={`${data.id}-${privatePort}:${value?.HostPort}/${type}`}
                 >
-                  {privatePort}:{value?.HostPort}/{type.toUpperCase()}
+                  {value
+                    ? `${privatePort}:${
+                        value[0]?.HostPort
+                      }/${type.toUpperCase()}`
+                    : `${privatePort}/${type.toUpperCase()}`}
+                  {/* {privatePort}:{value[0]?.HostPort}/{type.toUpperCase()} */}
                 </Grid.Row>
               );
             })}

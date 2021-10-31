@@ -1,4 +1,3 @@
-import { createElement } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { Icon, Menu, Divider } from "semantic-ui-react";
 import { selectedContainerState } from "../../recoil/Container";

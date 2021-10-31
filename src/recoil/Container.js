@@ -1,29 +1,18 @@
 import { atom, selector } from "recoil";
-import {
-  containerInspectData,
-  containerListData,
-  containersStatsData,
-  networkListData,
-} from "../temp/initial-elements";
 
 const containerListState = atom({
   key: "containerListState",
   default: [],
 });
 
-const containerInspcetListState = atom({
-  key: "containerInspcetListState",
-  default: containerInspectData,
-});
-
 const containerStatsListState = atom({
   key: "containerStatsListState",
-  default: containersStatsData,
+  default: [],
 });
 
 const containerNetworkListState = atom({
   key: "containerNetworkListState",
-  default: networkListData,
+  default: [],
 });
 
 const selectedContainerState = atom({
@@ -31,8 +20,40 @@ const selectedContainerState = atom({
   default: undefined,
 });
 
-// side panel
+// container usage
+const containerUsageState = selector({
+  key: "containerUsageState",
+  get: ({ get }) => {
+    const containerStatsList = get(containerStatsListState);
+    return Object.entries(containerStatsList).reduce((result, [key, value]) => {
+      // usage calculation
+      const cpuDelta =
+        value?.cpu_stats.cpu_usage.total_usage -
+        value?.precpu_stats.cpu_usage.total_usage;
+      const systemCpuDelta =
+        value?.cpu_stats.system_cpu_usage -
+        value?.precpu_stats.system_cpu_usage;
+      const cpu =
+        (cpuDelta / systemCpuDelta) * value?.cpu_stats.online_cpus * 100.0;
+      const memory =
+        (value?.memory_stats.usage - value?.memory_stats.stats?.cache) /
+        1024 /
+        1024;
+      const totalMemory = value?.memory_stats.limit / 1024 / 1024;
 
+      // eslint-disable-next-line no-param-reassign
+      result[key] = {
+        name: value.name,
+        cpu: cpu || 0,
+        memory: Math.round(memory) || 0,
+        totalMemory: Math.round(totalMemory) || 0,
+      };
+      return result;
+    }, {});
+  },
+});
+
+// side panel
 const containerPanelListState = selector({
   key: "containerPanelListState",
   get: ({ get }) => {
@@ -49,9 +70,9 @@ const containerPanelListState = selector({
 
 export {
   containerListState,
-  containerInspcetListState,
   selectedContainerState,
   containerStatsListState,
+  containerUsageState,
   containerNetworkListState,
   containerPanelListState,
 };
