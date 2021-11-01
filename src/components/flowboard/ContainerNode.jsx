@@ -98,9 +98,12 @@ const ContainerNode = ({ data }) => (
       </Grid.Row>
     </Grid>
 
-    <Label attached="top right" size="tiny" color="green">
-      {data.status}
-    </Label>
+    <Label
+      attached="top right"
+      size="tiny"
+      content={data.status}
+      color={data.status === "running" ? "green" : "red"}
+    />
   </>
 );
 

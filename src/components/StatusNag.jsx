@@ -8,12 +8,15 @@ import {
   containerListState,
   containerNetworkListState,
   containerStatsListState,
+  imagesListState,
 } from "../recoil/Container";
 
 const StatusNag = () => {
   const containerList = useRecoilValue(containerListState);
   const containerStatsList = useRecoilValue(containerStatsListState);
   const containerNetworkList = useRecoilValue(containerNetworkListState);
+  const imagesList = useRecoilValue(imagesListState);
+
   const [visable, setVisable] = useState(true);
   const handleClose = () => setVisable(false);
   return (
@@ -39,6 +42,12 @@ const StatusNag = () => {
               <Icon name="check" color="green" />
             )}
             <span>Network List </span>
+            {imagesList.length === 0 ? (
+              <Icon name="x" color="red" />
+            ) : (
+              <Icon name="check" color="green" />
+            )}
+            <span>Image List </span>
           </div>
           <Icon name="close" onClick={handleClose} />
         </div>

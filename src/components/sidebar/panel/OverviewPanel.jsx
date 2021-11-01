@@ -1,10 +1,19 @@
 import { Icon, Card } from "semantic-ui-react";
 import { useRecoilValue } from "recoil";
 import UsageCard from "../../UsageCard";
-import { containerUsageState } from "../../../recoil/Container";
+import {
+  containerListState,
+  containerNetworkListState,
+  containerUsageState,
+  imagesListState,
+} from "../../../recoil/Container";
 
 const OverviewPanel = () => {
   const containerUsage = useRecoilValue(containerUsageState);
+  const containerList = useRecoilValue(containerListState);
+  const networkList = useRecoilValue(containerNetworkListState);
+  const imagesList = useRecoilValue(imagesListState);
+
   const cpuUsage = Object.entries(containerUsage).map(([id, value]) => ({
     id: id.substr(0, 12),
     name: value.name,
@@ -39,21 +48,21 @@ const OverviewPanel = () => {
             <Icon name="dice d6" size="huge" />
           </div>
           <Card.Content>
-            <Card.Header>10</Card.Header>
+            <Card.Header>{containerList.length}</Card.Header>
             <Card.Description>Containers</Card.Description>
           </Card.Content>
         </Card>
         <Card style={{ width: "170px", alignItems: "center", minWidth: "0px" }}>
           <Icon name="window restore" size="huge" />
           <Card.Content>
-            <Card.Header>N/A</Card.Header>
+            <Card.Header>{imagesList.length}</Card.Header>
             <Card.Description>Images</Card.Description>
           </Card.Content>
         </Card>
         <Card style={{ width: "170px", alignItems: "center", minWidth: "0px" }}>
           <Icon name="sitemap" size="huge" />
           <Card.Content>
-            <Card.Header>3</Card.Header>
+            <Card.Header>{networkList.length}</Card.Header>
             <Card.Description>Networks</Card.Description>
           </Card.Content>
         </Card>

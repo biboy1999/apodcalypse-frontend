@@ -22,7 +22,7 @@ const getPercent = (value, total, precision) =>
     ? Math.round(value * (10 * precision)) / (10 * precision)
     : Math.round(value);
 
-const StackedProgress = memo(({ total, data, title, label }) => {
+const StackedProgress = memo(({ total, data }) => {
   const allZero = data.every((e) => e.value === 0);
   // const autoPrecision = derivePrecision(
   //   Math.min.apply(
@@ -74,14 +74,6 @@ const StackedProgress = memo(({ total, data, title, label }) => {
 
   return (
     <>
-      <Grid>
-        <Grid.Column floated="left" width={8}>
-          {title}
-        </Grid.Column>
-        <Grid.Column floated="right" width={8} textAlign="right">
-          {label}
-        </Grid.Column>
-      </Grid>
       <div className="ui multiple progress" style={{ margin: "0px" }}>
         {bar}
       </div>
@@ -91,9 +83,7 @@ const StackedProgress = memo(({ total, data, title, label }) => {
 
 StackedProgress.propTypes = {
   total: PropTypes.number.isRequired,
-  data: PropTypes.arrayOf(PropTypes.number).isRequired,
-  title: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default StackedProgress;

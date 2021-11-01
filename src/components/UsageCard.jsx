@@ -27,7 +27,7 @@ UsageCard.propTypes = {
   title: PropTypes.string.isRequired,
   labelSuffix: PropTypes.string.isRequired,
   total: PropTypes.number.isRequired,
-  data: PropTypes.arrayOf(PropTypes.number).isRequired,
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default UsageCard;

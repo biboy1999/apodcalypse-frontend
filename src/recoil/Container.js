@@ -15,6 +15,11 @@ const containerNetworkListState = atom({
   default: [],
 });
 
+const imagesListState = atom({
+  key: "imagesListState",
+  default: [],
+});
+
 const selectedContainerState = atom({
   key: "selectedContainerState",
   default: undefined,
@@ -72,6 +77,7 @@ export {
   containerListState,
   selectedContainerState,
   containerStatsListState,
+  imagesListState,
   containerUsageState,
   containerNetworkListState,
   containerPanelListState,

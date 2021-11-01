@@ -11,6 +11,7 @@ import {
   containerListState,
   containerNetworkListState,
   containerStatsListState,
+  imagesListState,
 } from "../../recoil/Container";
 import StatusNag from "../StatusNag";
 
@@ -22,10 +23,11 @@ const Main = () => {
   const setContainerNetworkListState = useSetRecoilState(
     containerNetworkListState,
   );
+  const setImagesListState = useSetRecoilState(imagesListState);
 
   const wsContainer = useRef(null);
   const wsNetwork = useRef(null);
-  // const wsImage = useRef(null);
+  const wsImage = useRef(null);
 
   useEffect(() => {
     wsContainer.current = io("http://127.0.0.1:4636/containers");
@@ -62,7 +64,6 @@ const Main = () => {
 
     const listTimer = setInterval(() => {
       wsNetwork.current.volatile.emit("list", {}, (ack) => {
-        // console.log(ack);
         setContainerNetworkListState(ack);
       });
     }, 3000);
@@ -70,6 +71,24 @@ const Main = () => {
     return () => {
       clearInterval(listTimer);
       wsNetwork.current.disconnect();
+    };
+  }, []);
+
+  useEffect(() => {
+    wsImage.current = io("http://127.0.0.1:4636/images");
+    wsImage.current.on("connect", () => {
+      console.log(wsImage.current.id);
+    });
+
+    const listTimer = setInterval(() => {
+      wsImage.current.volatile.emit("list", (ack) => {
+        setImagesListState(ack);
+      });
+    }, 3000);
+
+    return () => {
+      clearInterval(listTimer);
+      wsImage.current.disconnect();
     };
   }, []);
 
