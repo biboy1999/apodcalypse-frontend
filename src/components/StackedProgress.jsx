@@ -2,19 +2,20 @@ import { memo } from "react";
 import { Popup, Header, Grid } from "semantic-ui-react";
 import PropTypes from "prop-types";
 
-const derivePrecision = (min, total) => {
-  let precisionPower = 0;
-  let precision = 1;
-  let ratio = min / total;
-  while (precisionPower < 10) {
-    ratio *= precision;
-    if (ratio > 1) {
-      break;
-    }
-    precision = (precisionPower++) ** 10;
-  }
-  return precision;
-};
+// this is trash
+// const derivePrecision = (min, total) => {
+//   let precisionPower = 0;
+//   let precision = 1;
+//   let ratio = min / total;
+//   while (precisionPower < 10) {
+//     ratio *= precision;
+//     if (ratio > 1) {
+//       break;
+//     }
+//     precision = (precisionPower++) ** 10;
+//   }
+//   return precision;
+// };
 
 const getPercent = (value, total, precision) =>
   precision > 0
@@ -23,13 +24,13 @@ const getPercent = (value, total, precision) =>
 
 const StackedProgress = memo(({ total, data, title, label }) => {
   const allZero = data.every((e) => e.value === 0);
-  const autoPrecision = derivePrecision(
-    Math.min.apply(
-      null,
-      data.map((e) => e.value),
-    ),
-    total,
-  );
+  // const autoPrecision = derivePrecision(
+  //   Math.min.apply(
+  //     null,
+  //     data.map((e) => e.value),
+  //   ),
+  //   total,
+  // );
 
   const bar = data.map((e, i, { length }) => {
     const percent = (e.value / total) * 100;
@@ -52,10 +53,11 @@ const StackedProgress = memo(({ total, data, title, label }) => {
                   : percent === 0
                   ? "none"
                   : "block",
+              minWidth: "5px",
             }}
           >
             <div className="progress">
-              {`${getPercent(percent, total, autoPrecision)}%`}
+              {`${getPercent(percent, total, 2)}%`}
             </div>
           </div>
         }

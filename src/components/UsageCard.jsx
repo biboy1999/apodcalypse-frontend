@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import StackedProgress from "./StackedProgress";
 
 const UsageCard = ({ data, title, labelSuffix, total }) => {
-  const sum = data.reduce((acc, b) => acc + b.value, 0);
+  const sum = data.reduce((acc, b) => acc + b.value, 0).toFixed(2);
   return (
     <>
       <Card.Group>
