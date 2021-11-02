@@ -2,7 +2,6 @@ import { atom, selector } from "recoil";
 import {
   containerListState,
   containerNetworkListState,
-  containerStatsListState,
   containerUsageState,
 } from "./Container";
 

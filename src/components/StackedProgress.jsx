@@ -1,5 +1,5 @@
 import { memo } from "react";
-import { Popup, Header, Grid } from "semantic-ui-react";
+import { Popup, Header } from "semantic-ui-react";
 import PropTypes from "prop-types";
 
 // this is trash

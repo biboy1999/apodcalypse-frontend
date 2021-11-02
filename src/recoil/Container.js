@@ -64,11 +64,13 @@ const containerPanelListState = selector({
   get: ({ get }) => {
     const containerList = get(containerListState);
 
+    if (containerList.length === 0) return [];
+
     return containerList.map((container) => ({
       id: container.Id,
-      name: container.Names.join(","),
-      state: container.State,
-      image: container.Image,
+      name: container.Name,
+      state: container.State.Status,
+      image: container.Config.Image,
     }));
   },
 });
