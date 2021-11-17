@@ -10,18 +10,48 @@ import {
 } from "recharts";
 import { useRecoilValue } from "recoil";
 import { chartData } from "../../../temp/initial-elements";
-import { selectedContainerState } from "../../../recoil/Container";
+import {
+  selectedContainerState,
+  containerUsageState,
+} from "../../../recoil/Container";
+
+const statuslist = {
+  conatinerId: "",
+  status: [...Array(50)].map(() => ({
+    time: null,
+    cpu: 0,
+    memory: 0,
+  })),
+};
 
 const StatusPanel = () => {
   const selectedContainer = useRecoilValue(selectedContainerState);
-  console.log(selectedContainer.data.id);
+  const containerUsage = useRecoilValue(containerUsageState);
+
+  console.log(statuslist);
+  if (selectedContainer.data.id === statuslist.conatinerId) {
+    statuslist.status.shift();
+    statuslist.status.push({
+      time: null,
+      cpu: containerUsage[selectedContainer.data.id].cpu,
+      memory: containerUsage[selectedContainer.data.id].memory,
+    });
+  } else {
+    statuslist.conatinerId = selectedContainer.data.id;
+    statuslist.status = [...Array(50)].map(() => ({
+      time: null,
+      cpu: 0,
+      memory: 0,
+    }));
+  }
+
   return (
     <>
       <div className="flex-box">
         <h1>CPU</h1>
         <ResponsiveContainer maxHeight={300}>
           <LineChart
-            data={chartData}
+            data={statuslist.status}
             margin={{
               top: 10,
               right: 30,
@@ -45,7 +75,7 @@ const StatusPanel = () => {
         <h1>Memory</h1>
         <ResponsiveContainer maxHeight={300}>
           <LineChart
-            data={chartData}
+            data={statuslist.status}
             margin={{
               top: 10,
               right: 30,

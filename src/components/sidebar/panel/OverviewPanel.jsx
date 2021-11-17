@@ -31,7 +31,7 @@ const OverviewPanel = () => {
   return (
     <div className="infosidebar">
       <UsageCard
-        total={100}
+        total={400}
         title="CPU Usage"
         labelSuffix="%"
         data={cpuUsage}
