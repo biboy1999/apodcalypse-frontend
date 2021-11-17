@@ -1,17 +1,10 @@
 import { useRecoilValue } from "recoil";
-import {
-  Button,
-  Icon,
-  Table,
-  Divider,
-  Checkbox,
-  Popup,
-  Header,
-} from "semantic-ui-react";
-import { imagesListState } from "../../../recoil/Container";
+import { Table } from "semantic-ui-react";
+import { containerNetworkListState } from "../../../recoil/Container";
 
 const ImagePanel = () => {
-  const imageList = useRecoilValue(imagesListState);
+  const networksList = useRecoilValue(containerNetworkListState);
+  const sorted = [...networksList].sort((a, b) => a.Id > b.Id);
   // console.log(imageList);
   return (
     <>
@@ -43,33 +36,19 @@ const ImagePanel = () => {
           <Table fixed compact="very" basic="very" selectable>
             <Table.Header fullWidth>
               <Table.Row>
-                {/* <Table.HeaderCell style={{ width: "min-content" }}>
-                  <Checkbox />
-                </Table.HeaderCell> */}
                 <Table.HeaderCell>ID</Table.HeaderCell>
-                <Table.HeaderCell>Tags</Table.HeaderCell>
-                <Table.HeaderCell>Size</Table.HeaderCell>
+                <Table.HeaderCell>Name</Table.HeaderCell>
+                <Table.HeaderCell>Driver</Table.HeaderCell>
                 <Table.HeaderCell>Created</Table.HeaderCell>
-                <Table.HeaderCell width="1" />
               </Table.Row>
             </Table.Header>
             <Table.Body>
-              {imageList.map((e) => (
+              {sorted.map((e) => (
                 <Table.Row key={e.Id}>
-                  {/* <Table.Cell>
-                    <Checkbox />
-                  </Table.Cell> */}
                   <Table.Cell>{e.Id}</Table.Cell>
-                  <Table.Cell className="warp-text">
-                    {e.RepoTags.join(",")}
-                  </Table.Cell>
-                  <Table.Cell>
-                    {(e.Size / 1024 / 1024).toFixed(2)} MB
-                  </Table.Cell>
+                  <Table.Cell className="warp-text">{e.Name}</Table.Cell>
+                  <Table.Cell>{e.Driver}</Table.Cell>
                   <Table.Cell>{e.Created}</Table.Cell>
-                  <Table.Cell>
-                    <Icon name="arrow right" />
-                  </Table.Cell>
                 </Table.Row>
               ))}
             </Table.Body>

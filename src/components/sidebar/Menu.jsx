@@ -9,6 +9,7 @@ import AttachPanel from "./panel/AttachPanel";
 import StatusPanel from "./panel/StatusPanel";
 import AddImage from "./model/AddImage";
 import AddContainer from "./model/AddContainer";
+import NetworkPanel from "./panel/networkPanel";
 
 const menuItems = [
   {
@@ -32,7 +33,13 @@ const menuItems = [
     icon: "window restore",
     panel: <ImagePanel />,
   },
-  { key: "networks", type: "host", name: "Networks", icon: "sitemap" },
+  {
+    key: "networks",
+    type: "host",
+    name: "Networks",
+    icon: "sitemap",
+    panel: <NetworkPanel />,
+  },
   {
     key: "status",
     type: "container",
@@ -40,16 +47,16 @@ const menuItems = [
     icon: "chart area",
     panel: <StatusPanel />,
   },
-  {
-    key: "terminal",
-    type: "container",
-    name: "Terminal",
-    icon: "terminal",
-    panel: <AttachPanel />,
-  },
+  // {
+  //   key: "terminal",
+  //   type: "container",
+  //   name: "Terminal",
+  //   icon: "terminal",
+  //   panel: <AttachPanel />,
+  // },
   { key: "logs", type: "container", name: "Logs", icon: "stream" },
-  { key: "inspect", type: "container", name: "Inspect", icon: "search" },
-  { key: "setting", type: "container", name: "Settings", icon: "wrench" },
+  // { key: "inspect", type: "container", name: "Inspect", icon: "search" },
+  // { key: "setting", type: "container", name: "Settings", icon: "wrench" },
 
   {
     key: "CreateContainer",

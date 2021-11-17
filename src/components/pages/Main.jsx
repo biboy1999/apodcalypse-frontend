@@ -13,6 +13,11 @@ import {
   containerStatsListState,
   imagesListState,
 } from "../../recoil/Container";
+import {
+  containersSocket,
+  imagesSocket,
+  networksSocket,
+} from "../../recoil/Socketio";
 import StatusNag from "../StatusNag";
 
 const Main = () => {
@@ -25,70 +30,77 @@ const Main = () => {
   );
   const setImagesListState = useSetRecoilState(imagesListState);
 
-  const wsContainer = useRef(null);
-  const wsNetwork = useRef(null);
-  const wsImage = useRef(null);
+  const setContainerSocket = useSetRecoilState(containersSocket);
+  const setImagesSocket = useSetRecoilState(imagesSocket);
+  const setNetworksSocket = useSetRecoilState(networksSocket);
 
   useEffect(() => {
-    wsContainer.current = io("http://127.0.0.1:4636/containers");
-    wsContainer.current.on("connect", () => {
-      console.log(wsContainer.current.id);
+    const wsContainer = io("http://127.0.0.1:4636/containers");
+
+    wsContainer.on("connect", () => {
+      console.log(wsContainer.id);
     });
 
     const listTimer = setInterval(() => {
-      wsContainer.current.volatile.emit("list", { all: true }, (ack) => {
+      wsContainer.volatile.emit("list", { all: true }, (ack) => {
         // console.log(ack);
         setContainerListState(ack);
       });
     }, 5000);
 
     const statsTimer = setInterval(() => {
-      wsContainer.current.volatile.emit("list_stats", (ack) => {
+      wsContainer.volatile.emit("list_stats", (ack) => {
         // console.log(ack);
         setContainerStatsListState(ack);
       });
     }, 7000);
 
+    setContainerSocket(wsContainer);
+
     return () => {
       clearInterval(listTimer);
       clearInterval(statsTimer);
-      wsContainer.current.disconnect();
+      wsContainer.disconnect();
     };
   }, []);
 
   useEffect(() => {
-    wsNetwork.current = io("http://127.0.0.1:4636/networks");
-    wsNetwork.current.on("connect", () => {
-      console.log(wsNetwork.current.id);
+    const wsNetwork = io("http://127.0.0.1:4636/networks");
+    wsNetwork.on("connect", () => {
+      console.log(wsNetwork.id);
     });
 
     const listTimer = setInterval(() => {
-      wsNetwork.current.volatile.emit("list", {}, (ack) => {
+      wsNetwork.volatile.emit("list", {}, (ack) => {
         setContainerNetworkListState(ack);
       });
     }, 3000);
 
+    setNetworksSocket(wsNetwork);
+
     return () => {
       clearInterval(listTimer);
-      wsNetwork.current.disconnect();
+      wsNetwork.disconnect();
     };
   }, []);
 
   useEffect(() => {
-    wsImage.current = io("http://127.0.0.1:4636/images");
-    wsImage.current.on("connect", () => {
-      console.log(wsImage.current.id);
+    const wsImage = io("http://127.0.0.1:4636/images");
+    wsImage.on("connect", () => {
+      console.log(wsImage.id);
     });
 
     const listTimer = setInterval(() => {
-      wsImage.current.volatile.emit("list", (ack) => {
+      wsImage.volatile.emit("list", (ack) => {
         setImagesListState(ack);
       });
-    }, 3000);
+    }, 4000);
+
+    setImagesSocket(wsImage);
 
     return () => {
       clearInterval(listTimer);
-      wsImage.current.disconnect();
+      wsImage.disconnect();
     };
   }, []);
 
