@@ -10,6 +10,7 @@ import StatusPanel from "./panel/StatusPanel";
 import AddImage from "./model/AddImage";
 import AddContainer from "./model/AddContainer";
 import NetworkPanel from "./panel/networkPanel";
+import AddRecipe from "./model/AddRecipe";
 
 const menuItems = [
   {
@@ -75,6 +76,14 @@ const menuItems = [
     icon: "window restore",
     cornerIcon: "add",
     panel: (trigger) => <AddImage key="CreateImage" trigger={trigger} />,
+  },
+  {
+    key: "CreateRecipe",
+    type: "action",
+    name: "Create Recipe",
+    icon: "scroll",
+    cornerIcon: "add",
+    panel: (trigger) => <AddRecipe key="CreateRecipe" trigger={trigger} />,
   },
 ];
 // eslint-disable-next-line react/prop-types
