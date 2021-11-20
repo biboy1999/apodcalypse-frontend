@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/apodcalypse-frontend/static/css/main.08462110.chunk.css",
+    "main.js": "/apodcalypse-frontend/static/js/main.96d3590e.chunk.js",
+    "main.js.map": "/apodcalypse-frontend/static/js/main.96d3590e.chunk.js.map",
+    "runtime-main.js": "/apodcalypse-frontend/static/js/runtime-main.1e99dce9.js",
+    "runtime-main.js.map": "/apodcalypse-frontend/static/js/runtime-main.1e99dce9.js.map",
+    "static/css/2.801af463.chunk.css": "/apodcalypse-frontend/static/css/2.801af463.chunk.css",
+    "static/js/2.5fe2ae7c.chunk.js": "/apodcalypse-frontend/static/js/2.5fe2ae7c.chunk.js",
+    "static/js/2.5fe2ae7c.chunk.js.map": "/apodcalypse-frontend/static/js/2.5fe2ae7c.chunk.js.map",
+    "index.html": "/apodcalypse-frontend/index.html",
+    "static/css/2.801af463.chunk.css.map": "/apodcalypse-frontend/static/css/2.801af463.chunk.css.map",
+    "static/css/main.08462110.chunk.css.map": "/apodcalypse-frontend/static/css/main.08462110.chunk.css.map",
+    "static/js/2.5fe2ae7c.chunk.js.LICENSE.txt": "/apodcalypse-frontend/static/js/2.5fe2ae7c.chunk.js.LICENSE.txt",
+    "static/media/semantic.css": "/apodcalypse-frontend/static/media/outline-icons.c5240512.woff2"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.1e99dce9.js",
+    "static/css/2.801af463.chunk.css",
+    "static/js/2.5fe2ae7c.chunk.js",
+    "static/css/main.08462110.chunk.css",
+    "static/js/main.96d3590e.chunk.js"
+  ]
+}
