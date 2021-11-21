@@ -1,7 +1,6 @@
 import { useRef, useEffect } from "react";
 import { FitAddon } from "xterm-addon-fit";
 import { XTerm } from "xterm-for-react";
-import { io } from "socket.io-client";
 // import 'xterm/css/xterm.css'
 // import { Terminal } from 'xterm';
 

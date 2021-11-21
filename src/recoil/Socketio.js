@@ -18,5 +18,11 @@ const networksSocket = atom({
   dangerouslyAllowMutability: true,
 });
 
+const recipesSocket = atom({
+  key: "recipesSocket",
+  default: null,
+  dangerouslyAllowMutability: true,
+});
+
 // eslint-disable-next-line import/prefer-default-export
-export { imagesSocket, containersSocket, networksSocket };
+export { imagesSocket, containersSocket, networksSocket, recipesSocket };

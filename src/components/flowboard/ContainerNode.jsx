@@ -28,7 +28,7 @@ const ContainerNode = ({ data }) => (
     <TopLabelProgress
       title="CPU"
       label={data.cpu != null ? `${Math.ceil(data.cpu)}%` : "n/a"}
-      value={data.cpu}
+      value={data.cpu ?? 0}
       total={100}
     />
 
@@ -39,7 +39,7 @@ const ContainerNode = ({ data }) => (
           ? `${Math.round(data.memory)}/${Math.round(data.totalMemory)} MiB`
           : "n/a"
       }
-      value={data.memory}
+      value={data.memory ?? 0}
       total={data.totalMemory}
     />
 
@@ -74,7 +74,6 @@ const ContainerNode = ({ data }) => (
                         value[0]?.HostPort
                       }/${type.toUpperCase()}`
                     : `${privatePort}/${type.toUpperCase()}`}
-                  {/* {privatePort}:{value[0]?.HostPort}/{type.toUpperCase()} */}
                 </Grid.Row>
               );
             })}
@@ -83,16 +82,21 @@ const ContainerNode = ({ data }) => (
 
         <Grid.Column>
           <Grid divided="vertically" textAlign="center">
-            {Object.entries(data.networkSettings.Networks).map(([, value]) => (
-              <Grid.Row key={`${data.id}-${value.NetworkID}`}>
-                {value.IPAddress}
-                <LabelNodeHandle
-                  type="source"
-                  position="right"
-                  id={`${data.id}-${value.NetworkID}`}
-                />
-              </Grid.Row>
-            ))}
+            {Object.entries(data.networkSettings.Networks).flatMap(
+              ([, value]) => {
+                if (value.NetworkID === "") return [];
+                return (
+                  <Grid.Row key={`${data.id}-${value.NetworkID}`}>
+                    {value.IPAddress}
+                    <LabelNodeHandle
+                      type="source"
+                      position="right"
+                      id={`${data.id}-${value.NetworkID}`}
+                    />
+                  </Grid.Row>
+                );
+              },
+            )}
           </Grid>
         </Grid.Column>
       </Grid.Row>

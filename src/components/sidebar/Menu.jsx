@@ -10,7 +10,8 @@ import StatusPanel from "./panel/StatusPanel";
 import AddImage from "./model/AddImage";
 import AddContainer from "./model/AddContainer";
 import NetworkPanel from "./panel/networkPanel";
-import AddRecipe from "./model/AddRecipe";
+import RecipeModel from "./model/RecipeModel";
+import LogsPanel from "./panel/LogsPanel";
 
 const menuItems = [
   {
@@ -55,7 +56,13 @@ const menuItems = [
   //   icon: "terminal",
   //   panel: <AttachPanel />,
   // },
-  { key: "logs", type: "container", name: "Logs", icon: "stream" },
+  {
+    key: "logs",
+    type: "container",
+    name: "Logs",
+    icon: "stream",
+    panel: <LogsPanel />,
+  },
   // { key: "inspect", type: "container", name: "Inspect", icon: "search" },
   // { key: "setting", type: "container", name: "Settings", icon: "wrench" },
 
@@ -83,7 +90,7 @@ const menuItems = [
     name: "Create Recipe",
     icon: "scroll",
     cornerIcon: "add",
-    panel: (trigger) => <AddRecipe key="CreateRecipe" trigger={trigger} />,
+    panel: (trigger) => <RecipeModel key="CreateRecipe" trigger={trigger} />,
   },
 ];
 // eslint-disable-next-line react/prop-types

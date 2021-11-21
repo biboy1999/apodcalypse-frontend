@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import { io } from "socket.io-client";
 import { Sidebar } from "semantic-ui-react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
@@ -17,6 +17,7 @@ import {
   containersSocket,
   imagesSocket,
   networksSocket,
+  recipesSocket,
 } from "../../recoil/Socketio";
 import StatusNag from "../StatusNag";
 
@@ -33,6 +34,7 @@ const Main = () => {
   const setContainerSocket = useSetRecoilState(containersSocket);
   const setImagesSocket = useSetRecoilState(imagesSocket);
   const setNetworksSocket = useSetRecoilState(networksSocket);
+  const setRecipesSocket = useSetRecoilState(recipesSocket);
 
   useEffect(() => {
     const wsContainer = io("http://127.0.0.1:4636/containers");
@@ -101,6 +103,19 @@ const Main = () => {
     return () => {
       clearInterval(listTimer);
       wsImage.disconnect();
+    };
+  }, []);
+
+  useEffect(() => {
+    const wsRecipe = io("http://127.0.0.1:4636/recipes");
+    wsRecipe.on("connect", () => {
+      console.log(wsRecipe.id);
+    });
+
+    setRecipesSocket(wsRecipe);
+
+    return () => {
+      wsRecipe.disconnect();
     };
   }, []);
 

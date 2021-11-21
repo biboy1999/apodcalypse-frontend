@@ -9,7 +9,6 @@ import {
   Legend,
 } from "recharts";
 import { useRecoilValue } from "recoil";
-import { chartData } from "../../../temp/initial-elements";
 import {
   selectedContainerState,
   containerUsageState,
