@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 import { RecoilRoot, useRecoilSnapshot } from "recoil";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import Main from "./components/pages/Main";
 
@@ -18,6 +20,7 @@ import Main from "./components/pages/Main";
 const App = () => (
   <RecoilRoot>
     {/* <DebugObserver /> */}
+    <ToastContainer position="top-left" />
     <Main />
   </RecoilRoot>
 );

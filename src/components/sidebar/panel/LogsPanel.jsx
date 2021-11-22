@@ -14,40 +14,22 @@ const LogsPanel = () => {
   const selectedContainer = useRecoilValue(selectedContainerState);
 
   useEffect(() => {
+    term.current.terminal.clear();
     contianerSocket.emit("listen_logs", selectedContainer.data.id, {
       tail: 200,
     });
-    contianerSocket.on("logs", (character) => {
-      term.current.terminal.write(character);
+    contianerSocket.on("logs", (line) => {
+      term.current.terminal.writeln(line);
     });
 
     return () => {
       contianerSocket.emit("stop_listen_logs", selectedContainer.data.id);
       contianerSocket.removeAllListeners("logs");
-      term.current.terminal.clear();
     };
   }, [selectedContainer]);
 
-  // useEffect(() => {
-  //   const logTimer = setInterval(() => {
-  //     contianerSocket.volatile.emit(
-  //       "logs",
-  //       selectedContainer.data.id,
-  //       { tail: 200 },
-  //       (ack) => {
-  //         console.log(new TextDecoder().decode(ack));
-  //       },
-  //     );
-  //   }, 5000);
-
-  //   return () => {
-  //     clearInterval(logTimer);
-  //   };
-  // }, [selectedContainer]);
-
   useEffect(() => {
     fitAddon.fit();
-    // ws.current.emit('resize', {"cols": term.current.terminal.cols, "rows": term.current.terminal.rows})
   });
   return (
     <>
@@ -58,9 +40,6 @@ const LogsPanel = () => {
           ref={term}
           addons={[fitAddon]}
           onResize={fitAddon.fit()}
-          // onKey={(e)=>{
-          //   ws.current.emit('pty-input', {'input': e.key});
-          // }}
         />
       </div>
     </>

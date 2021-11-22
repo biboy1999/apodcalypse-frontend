@@ -12,6 +12,7 @@ import AddContainer from "./model/AddContainer";
 import NetworkPanel from "./panel/networkPanel";
 import RecipeModel from "./model/RecipeModel";
 import LogsPanel from "./panel/LogsPanel";
+import UploadRecipe from "./model/UploadRecipe";
 
 const menuItems = [
   {
@@ -66,23 +67,31 @@ const menuItems = [
   // { key: "inspect", type: "container", name: "Inspect", icon: "search" },
   // { key: "setting", type: "container", name: "Settings", icon: "wrench" },
 
+  // {
+  //   key: "CreateContainer",
+  //   type: "action",
+  //   name: "Create Container",
+  //   icon: "dice d6",
+  //   cornerIcon: "add",
+  //   panel: (trigger) => (
+  //     <AddContainer key="CreateContainer" trigger={trigger} />
+  //   ),
+  // },
+  // {
+  //   key: "CreateImage",
+  //   type: "action",
+  //   name: "Create Images",
+  //   icon: "window restore",
+  //   cornerIcon: "add",
+  //   panel: (trigger) => <AddImage key="CreateImage" trigger={trigger} />,
+  // },
   {
-    key: "CreateContainer",
+    key: "UploadRecipe",
     type: "action",
-    name: "Create Container",
-    icon: "dice d6",
-    cornerIcon: "add",
-    panel: (trigger) => (
-      <AddContainer key="CreateContainer" trigger={trigger} />
-    ),
-  },
-  {
-    key: "CreateImage",
-    type: "action",
-    name: "Create Images",
-    icon: "window restore",
-    cornerIcon: "add",
-    panel: (trigger) => <AddImage key="CreateImage" trigger={trigger} />,
+    name: "Upload Recipe",
+    icon: "upload",
+    cornerIcon: "scroll",
+    panel: (trigger) => <UploadRecipe key="CreateImage" trigger={trigger} />,
   },
   {
     key: "CreateRecipe",

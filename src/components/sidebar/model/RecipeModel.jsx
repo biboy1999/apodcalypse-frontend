@@ -6,24 +6,35 @@ import RecipeSetting from "./recipe/RecipeSetting";
 
 // eslint-disable-next-line react/prop-types
 const RecipeModel = ({ trigger }) => {
-  const [mode, setMode] = useState(null);
+  const [open, setOpen] = useState(false);
   const [selectedRecipe, setSelectedRecipe] = useState("");
 
   const handleRecipeSelectClick = (e, { id }) => {
     setSelectedRecipe(id);
   };
 
+  // clear state
+  const handleClose = () => {
+    setSelectedRecipe("");
+    setOpen(false);
+  };
+
   let view;
-  if (mode === "predefined") {
-    view = <RecipesBrowser handleClick={handleRecipeSelectClick} />;
-    if (selectedRecipe !== "")
-      view = <RecipeSetting recipeName={selectedRecipe} />;
-  } else if (mode === "create") view = <div>no</div>;
-  else view = <ModeSelection handleModeChoose={setMode} />;
+  view = <RecipesBrowser handleClick={handleRecipeSelectClick} />;
+  if (selectedRecipe !== "")
+    view = (
+      <RecipeSetting recipeName={selectedRecipe} handleClose={handleClose} />
+    );
 
   return (
     <>
-      <Modal size="fullscreen" trigger={trigger}>
+      <Modal
+        size="large"
+        trigger={trigger}
+        onOpen={() => setOpen(true)}
+        onClose={() => handleClose()}
+        open={open}
+      >
         <Modal.Header>
           <Icon.Group>
             <Icon name="window restore" />

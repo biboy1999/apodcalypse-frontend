@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import { useRecoilValue } from "recoil";
 import {
   Table,
@@ -23,12 +24,27 @@ const ContainersPanel = () => {
   };
 
   const startContainer = () => {
-    selectedContainersId.forEach((id) => containerSocket.emit("start", id, {}));
+    selectedContainersId.forEach((id) => {
+      containerSocket.emit("start", id, {});
+      toast.info(`Starting Container: ${id.substring(0, 12)}`);
+    });
   };
 
   const stopContainer = () => {
-    selectedContainersId.forEach((id) => containerSocket.emit("stop", id, {}));
+    selectedContainersId.forEach((id) => {
+      containerSocket.emit("stop", id, {});
+      toast.info(`Stopping Container: ${id.substring(0, 12)}`);
+    });
   };
+
+  const deleteContainer = () => {
+    selectedContainersId.forEach((id) => {
+      containerSocket.emit("remove", id);
+      toast.info(`Removing Container: ${id.substring(0, 12)}`);
+    });
+    selectedContainersId.clear();
+  };
+
   return (
     <>
       <div className="flex-box">
@@ -44,7 +60,7 @@ const ContainersPanel = () => {
             <Icon name="pause" />
             Stop
           </Button>
-          <Button negative>
+          <Button negative onClick={deleteContainer}>
             <Icon name="trash" />
             Delete
           </Button>
@@ -62,7 +78,7 @@ const ContainersPanel = () => {
                 <Table.HeaderCell>Name</Table.HeaderCell>
                 <Table.HeaderCell>ID</Table.HeaderCell>
                 <Table.HeaderCell>Image</Table.HeaderCell>
-                <Table.HeaderCell width="1" />
+                <Table.HeaderCell>Created at</Table.HeaderCell>
               </Table.Row>
             </Table.Header>
             <Table.Body>

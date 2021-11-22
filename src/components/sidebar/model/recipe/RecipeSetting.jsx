@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import { useRecoilValue } from "recoil";
 import { Divider, Form, Header } from "semantic-ui-react";
 import { recipesSocket } from "../../../../recoil/Socketio";
 import FieldArray from "../../../form/fieldArray";
 
 // eslint-disable-next-line react/prop-types
-const RecipeSetting = ({ recipeName }) => {
+const RecipeSetting = ({ recipeName, handleClose }) => {
   const recipeSocket = useRecoilValue(recipesSocket);
 
   const { handleSubmit, control, register, getValues, setValue, reset } =
@@ -38,7 +39,7 @@ const RecipeSetting = ({ recipeName }) => {
         ),
       })),
     );
-
+    console.log("sended");
     recipeSocket.emit(
       "craft",
       recipeCanonicalId,
@@ -46,17 +47,26 @@ const RecipeSetting = ({ recipeName }) => {
       variablesArgs,
       envArgs,
     );
+
+    handleClose();
   };
 
-  useEffect(() => {
-    recipeSocket.on("message", (msg) => {
-      console.log(msg);
-    });
+  // useEffect(() => {
+  //   recipeSocket.on("message", (msg) => {
+  //     toast(msg.message, {
+  //       position: "top-right",
+  //       autoClose: 5000,
+  //       hideProgressBar: false,
+  //       closeOnClick: true,
+  //       pauseOnHover: true,
+  //       draggable: true,
+  //     });
+  //   });
 
-    return () => {
-      recipeSocket.removeAllListeners("message");
-    };
-  }, [recipeSocket]);
+  //   return () => {
+  //     recipeSocket.removeAllListeners("message");
+  //   };
+  // }, [recipeSocket]);
 
   useEffect(() => {
     if (recipeSocket)
@@ -91,11 +101,7 @@ const RecipeSetting = ({ recipeName }) => {
         content="Prefix name"
         subheader="For conatiner group prefix name"
       />
-      <input
-        type="text"
-        {...register(`prefix`)}
-        defaultValue={Math.round(Date.now()).toString(36)}
-      />
+      <input type="text" {...register(`prefix`)} />
       <Header as="h1" content="Variables" />
       <Divider />
       {variablesFields.map((item, index) => (

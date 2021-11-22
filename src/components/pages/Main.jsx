@@ -3,6 +3,7 @@ import { io } from "socket.io-client";
 import { Sidebar } from "semantic-ui-react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { ReactFlowProvider } from "react-flow-renderer";
+import { toast } from "react-toastify";
 import SidebarPanel from "../sidebar/Sidebar";
 import GraphBoard from "../flowboard/GraphBoard";
 import SidebarMenu from "../sidebar/Menu";
@@ -31,6 +32,7 @@ const Main = () => {
   );
   const setImagesListState = useSetRecoilState(imagesListState);
 
+  const recipeSocket = useRecoilValue(recipesSocket);
   const setContainerSocket = useSetRecoilState(containersSocket);
   const setImagesSocket = useSetRecoilState(imagesSocket);
   const setNetworksSocket = useSetRecoilState(networksSocket);
@@ -118,6 +120,19 @@ const Main = () => {
       wsRecipe.disconnect();
     };
   }, []);
+
+  useEffect(() => {
+    if (recipeSocket) {
+      recipeSocket.on("message", (msg) => {
+        toast.info(msg.message);
+      });
+    }
+    return () => {
+      if (recipeSocket) {
+        recipeSocket.removeAllListeners("message");
+      }
+    };
+  }, [recipeSocket]);
 
   return (
     <>
