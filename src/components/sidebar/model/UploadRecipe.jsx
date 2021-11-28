@@ -14,20 +14,28 @@ import { recipesSocket } from "../../../recoil/Socketio";
 const UploadRecipe = ({ trigger }) => {
   const recipeSocket = useRecoilValue(recipesSocket);
 
+  const [open, setOpen] = useState(false);
+
   const handleFiles = ({ target: { files } }) => {
     if (files[0]) {
       const reader = new FileReader();
       reader.onload = (evt) => {
         recipeSocket.emit("upload", evt.target.result);
+        setOpen(false);
       };
-      console.log("sended");
       reader.readAsArrayBuffer(files[0]);
     }
   };
 
   return (
     <>
-      <Modal size="large" trigger={trigger}>
+      <Modal
+        size="large"
+        trigger={trigger}
+        open={open}
+        onClose={() => setOpen(false)}
+        onOpen={() => setOpen(true)}
+      >
         <Modal.Header>
           <Icon.Group>
             <Icon name="window restore" />

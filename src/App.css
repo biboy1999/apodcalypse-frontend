@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
   padding: 0;
   margin: 0;
 }
@@ -7,6 +8,10 @@ html, body {
   display: flex;
   align-items: stretch;
   height: 100vh;
+}
+
+input:invalid {
+  border-color: red !important;
 }
 
 /* flex tab for sidebar */
@@ -44,11 +49,11 @@ html, body {
   cursor: pointer;
 }
 /* sidebar grid */
-.grid-container {  
+.grid-container {
   background-color: white;
   display: grid;
-  grid-template-columns: minmax(100px,1fr);
-  grid-template-rows: auto minmax(100px,1fr);
+  grid-template-columns: minmax(100px, 1fr);
+  grid-template-rows: auto minmax(100px, 1fr);
   height: 100%;
   padding: 0px 12px;
   overflow: hidden;
@@ -65,16 +70,15 @@ html, body {
   padding: 12px;
 }
 
-
 .infotitlebar {
   /* background-color: #3f3de6;  */
   padding: 12px;
   grid-column-start: 1;
   grid-row-start: 1;
   text-align: center;
-  display:flex;
-  justify-content:center;
-  align-items:center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -103,25 +107,25 @@ html, body {
 /* progress bar hack */
 .ui.reverse-indicating.progress[data-percent^="1"] .bar,
 .ui.reverse-indicating.progress[data-percent^="2"] .bar {
-  background-color: #66DA81;
+  background-color: #66da81;
 }
 .ui.reverse-indicating.progress[data-percent^="3"] .bar {
-  background-color: #B4D95C;
+  background-color: #b4d95c;
 }
 .ui.reverse-indicating.progress[data-percent^="4"] .bar,
 .ui.reverse-indicating.progress[data-percent^="5"] .bar {
-  background-color: #DDC928;
+  background-color: #ddc928;
 }
 .ui.reverse-indicating.progress[data-percent^="6"] .bar {
-  background-color: #E6BB48;
+  background-color: #e6bb48;
 }
 .ui.reverse-indicating.progress[data-percent^="7"] .bar,
 .ui.reverse-indicating.progress[data-percent^="8"] .bar {
-  background-color: #EFBC72;
+  background-color: #efbc72;
 }
 .ui.reverse-indicating.progress[data-percent^="9"] .bar,
 .ui.reverse-indicating.progress[data-percent^="100"] .bar {
-  background-color: #D95C5C;
+  background-color: #d95c5c;
 }
 
 /* node css */
@@ -143,4 +147,13 @@ html, body {
   background-color: white;
   border-width: 1px;
   border-style: solid;
+}
+
+path.react-flow__edge-path:hover {
+  stroke-width: 5;
+}
+
+.react-flow__edge.selected .react-flow__edge-path {
+  stroke-width: 2;
+  stroke: rgb(123, 123, 255) ;
 }

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import { Sidebar } from "semantic-ui-react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
@@ -21,6 +21,8 @@ import {
   recipesSocket,
 } from "../../recoil/Socketio";
 import StatusNag from "../StatusNag";
+import SocketStatusNag from "../SocketStatusNag";
+import formatter from "../../utils/Message";
 
 const Main = () => {
   const selectedMenuItem = useRecoilValue(selectedMenuItemState);
@@ -38,23 +40,28 @@ const Main = () => {
   const setNetworksSocket = useSetRecoilState(networksSocket);
   const setRecipesSocket = useSetRecoilState(recipesSocket);
 
+  const [isConnected, setIsConnected] = useState(false);
+
   useEffect(() => {
     const wsContainer = io("http://127.0.0.1:4636/containers");
 
     wsContainer.on("connect", () => {
       console.log(wsContainer.id);
+      setIsConnected(true);
+    });
+
+    wsContainer.on("disconnect", () => {
+      setIsConnected(false);
     });
 
     const listTimer = setInterval(() => {
       wsContainer.volatile.emit("list", { all: true }, (ack) => {
-        // console.log(ack);
         setContainerListState(ack);
       });
     }, 5000);
 
     const statsTimer = setInterval(() => {
       wsContainer.volatile.emit("list_stats", (ack) => {
-        // console.log(ack);
         setContainerStatsListState(ack);
       });
     }, 7000);
@@ -124,7 +131,7 @@ const Main = () => {
   useEffect(() => {
     if (recipeSocket) {
       recipeSocket.on("message", (msg) => {
-        toast.info(msg.message);
+        toast.info(formatter(msg.message));
       });
     }
     return () => {
@@ -138,6 +145,7 @@ const Main = () => {
     <>
       <div className="app">
         <StatusNag />
+        <SocketStatusNag visable={isConnected} />
         <Sidebar.Pushable style={{ flexGrow: "1" }}>
           <Sidebar
             animation="overlay"

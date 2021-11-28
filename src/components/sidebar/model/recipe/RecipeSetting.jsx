@@ -51,23 +51,6 @@ const RecipeSetting = ({ recipeName, handleClose }) => {
     handleClose();
   };
 
-  // useEffect(() => {
-  //   recipeSocket.on("message", (msg) => {
-  //     toast(msg.message, {
-  //       position: "top-right",
-  //       autoClose: 5000,
-  //       hideProgressBar: false,
-  //       closeOnClick: true,
-  //       pauseOnHover: true,
-  //       draggable: true,
-  //     });
-  //   });
-
-  //   return () => {
-  //     recipeSocket.removeAllListeners("message");
-  //   };
-  // }, [recipeSocket]);
-
   useEffect(() => {
     if (recipeSocket)
       recipeSocket.emit("get_recipe", recipeName, (ack) => {
@@ -78,6 +61,8 @@ const RecipeSetting = ({ recipeName, handleClose }) => {
             key: vars.key,
             desc: vars.description,
             value: vars.default,
+            type: vars.type,
+            required: vars.required,
           })),
           envvar: recipeJson.containers.map((c) => ({
             name: c.name,
@@ -85,6 +70,8 @@ const RecipeSetting = ({ recipeName, handleClose }) => {
               key: env.key,
               desc: env.description,
               value: env.default,
+              type: env.type,
+              required: env.required,
             })),
           })),
         };
@@ -101,7 +88,7 @@ const RecipeSetting = ({ recipeName, handleClose }) => {
         content="Prefix name"
         subheader="For conatiner group prefix name"
       />
-      <input type="text" {...register(`prefix`)} />
+      <input type="text" required {...register(`prefix`)} />
       <Header as="h1" content="Variables" />
       <Divider />
       {variablesFields.map((item, index) => (
@@ -111,6 +98,7 @@ const RecipeSetting = ({ recipeName, handleClose }) => {
             type="text"
             placeholder={item.desc}
             {...register(`variables.${index}.value`)}
+            required={item.required}
           />
         </div>
       ))}

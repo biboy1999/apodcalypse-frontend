@@ -11,6 +11,7 @@ import ReactFlow, {
 } from "react-flow-renderer";
 import { Icon } from "semantic-ui-react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useEffect, useRef, useState } from "react";
 import ContainerNode from "./ContainerNode";
 import { selectedContainerState } from "../../recoil/Container";
 import NetworkNode from "./NetworkNode";
@@ -31,17 +32,22 @@ const GraphBaord = () => {
   // external state
   const reactFlowElement = useRecoilValue(graphElementState);
   const setGraphPosition = useSetRecoilState(setGraphPositionState);
+
+  // local state
+  const runOnce = useRef(false);
+
   // reactflow state
   const nodes = useStoreState((state) => state.nodes);
   const edges = useStoreState((state) => state.edges);
+
+  const nodeHasDimension = (el) => el.__rf.width && el.__rf.height;
 
   const onLayout = async () => {
     const result = await updateLayout([...edges, ...nodes]);
     setGraphPosition(Object.assign({}, ...result));
   };
 
-  // const onElementsRemove = (elementsToRemove) =>
-  //   setElements((els) => removeElements(elementsToRemove, els));
+  const onElementsRemove = (elementsToRemove) => console.log(elementsToRemove);
   // const onConnect = (params) => setElements((els) => addEdge(params, els));
 
   // on selection change
@@ -52,11 +58,25 @@ const GraphBaord = () => {
     );
   };
 
+  useEffect(() => {
+    if (
+      !runOnce.current &&
+      nodes.length !== 0 &&
+      nodes.every(nodeHasDimension)
+    ) {
+      const update = async () => {
+        await onLayout();
+      };
+      update();
+      runOnce.current = true;
+    }
+  }, [nodes, edges]);
+
   return (
     <ReactFlow
       elements={reactFlowElement}
       nodeTypes={nodeTypes}
-      // onElementsRemove={onElementsRemove}
+      onElementsRemove={onElementsRemove}
       // onConnect={onConnect}
       onLoad={onLoad}
       onSelectionChange={onSelectionChange}

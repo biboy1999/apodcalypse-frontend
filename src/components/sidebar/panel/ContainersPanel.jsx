@@ -11,6 +11,7 @@ import {
 } from "semantic-ui-react";
 import { containerPanelListState } from "../../../recoil/Container";
 import { containersSocket } from "../../../recoil/Socketio";
+import ConfirmModal from "../../ConfirmModal";
 
 const selectedContainersId = new Set([]);
 
@@ -26,21 +27,22 @@ const ContainersPanel = () => {
   const startContainer = () => {
     selectedContainersId.forEach((id) => {
       containerSocket.emit("start", id, {});
-      toast.info(`Starting Container: ${id.substring(0, 12)}`);
+      toast.info(`🟢 Starting Container: ${id.substring(0, 12)}`);
     });
   };
 
   const stopContainer = () => {
     selectedContainersId.forEach((id) => {
       containerSocket.emit("stop", id, {});
-      toast.info(`Stopping Container: ${id.substring(0, 12)}`);
+      toast.info(`🟥 Stopping Container: ${id.substring(0, 12)}`);
     });
   };
 
-  const deleteContainer = () => {
+  const deleteContainer = (confirm) => {
+    if (!confirm) return;
     selectedContainersId.forEach((id) => {
       containerSocket.emit("remove", id);
-      toast.info(`Removing Container: ${id.substring(0, 12)}`);
+      toast.info(`🗑️ Removing Container: ${id.substring(0, 12)}`);
     });
     selectedContainersId.clear();
   };
@@ -60,10 +62,16 @@ const ContainersPanel = () => {
             <Icon name="pause" />
             Stop
           </Button>
-          <Button negative onClick={deleteContainer}>
-            <Icon name="trash" />
-            Delete
-          </Button>
+
+          <ConfirmModal
+            trigger={
+              <Button negative>
+                <Icon name="trash" />
+                Delete
+              </Button>
+            }
+            confirmCallback={(choose) => deleteContainer(choose)}
+          />
         </Button.Group>
         <Divider />
 

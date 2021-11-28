@@ -25,14 +25,24 @@ const CustomHandle = styled(Handle)`
   }}
 `;
 
-const CustomNodeHandle = ({ id, type, position }) => (
-  <CustomHandle position={position} id={id} type={type} />
+const CustomNodeHandle = ({ id, type, position, isConnectable = true }) => (
+  <CustomHandle
+    position={position}
+    id={id}
+    type={type}
+    isConnectable={isConnectable}
+  />
 );
 
 CustomNodeHandle.propTypes = {
   id: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   position: PropTypes.string.isRequired,
+  isConnectable: PropTypes.bool,
+};
+
+CustomNodeHandle.defaultProps = {
+  isConnectable: true,
 };
 
 export default CustomNodeHandle;

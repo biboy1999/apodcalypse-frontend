@@ -18,7 +18,18 @@ export default ({ nestIndex, control, register, getValues }) => {
             content={getValues(`envvar.${nestIndex}.nestedArray.${k}.key`)}
             subheader={getValues(`envvar.${nestIndex}.nestedArray.${k}.desc`)}
           />
-          <input {...register(`envvar.${nestIndex}.nestedArray.${k}.value`)} />
+          <input
+            required={getValues(
+              `envvar.${nestIndex}.nestedArray.${k}.required`,
+            )}
+            type={
+              getValues(`envvar.${nestIndex}.nestedArray.${k}.type`) ===
+              "password"
+                ? "password"
+                : "text"
+            }
+            {...register(`envvar.${nestIndex}.nestedArray.${k}.value`)}
+          />
         </div>
       ))}
       <Divider />

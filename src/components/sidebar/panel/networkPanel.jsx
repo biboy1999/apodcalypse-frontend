@@ -10,6 +10,7 @@ import {
 } from "semantic-ui-react";
 import { containerNetworkListState } from "../../../recoil/Container";
 import { networksSocket } from "../../../recoil/Socketio";
+import ConfirmModal from "../../ConfirmModal";
 
 const selectedNetowrksId = new Set([]);
 
@@ -24,10 +25,11 @@ const ImagePanel = () => {
     else selectedNetowrksId.delete(id);
   };
 
-  const deleteNetowrk = () => {
+  const deleteNetowrk = (confirm) => {
+    if (!confirm) return;
     selectedNetowrksId.forEach((id) => {
       networkSocket.emit("remove", id);
-      toast.info(`Removing Network: ${id.substring(0, 12)}`);
+      toast.info(`🗑️ Removing Network: ${id.substring(0, 12)}`);
     });
     selectedNetowrksId.clear();
   };
@@ -38,23 +40,15 @@ const ImagePanel = () => {
           Action
         </Header>
         <Button.Group widths="2">
-          {/* <Popup
-            content="Remove unused images"
-            position="bottom center"
+          <ConfirmModal
             trigger={
-              <Button>
-                <Icon.Group>
-                  <Icon name="database" />
-                  <Icon name="times" corner />
-                </Icon.Group>
-                Purge
+              <Button negative>
+                <Icon name="trash" />
+                Remove
               </Button>
             }
-          /> */}
-          <Button negative onClick={deleteNetowrk}>
-            <Icon name="trash" />
-            Remove
-          </Button>
+            confirmCallback={(choose) => deleteNetowrk(choose)}
+          />
         </Button.Group>
         <Divider />
         <div className="flex-tab">

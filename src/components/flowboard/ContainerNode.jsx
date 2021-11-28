@@ -92,6 +92,7 @@ const ContainerNode = ({ data }) => (
                       type="source"
                       position="right"
                       id={`${data.id}-${value.NetworkID}`}
+                      isConnectable={false}
                     />
                   </Grid.Row>
                 );
