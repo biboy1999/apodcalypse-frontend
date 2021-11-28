@@ -1,24 +1,24 @@
 {
   "files": {
-    "main.css": "/apodcalypse-frontend/static/css/main.08462110.chunk.css",
-    "main.js": "/apodcalypse-frontend/static/js/main.0db77c50.chunk.js",
-    "main.js.map": "/apodcalypse-frontend/static/js/main.0db77c50.chunk.js.map",
-    "runtime-main.js": "/apodcalypse-frontend/static/js/runtime-main.1e99dce9.js",
-    "runtime-main.js.map": "/apodcalypse-frontend/static/js/runtime-main.1e99dce9.js.map",
-    "static/css/2.0e3290df.chunk.css": "/apodcalypse-frontend/static/css/2.0e3290df.chunk.css",
-    "static/js/2.6fcd51ee.chunk.js": "/apodcalypse-frontend/static/js/2.6fcd51ee.chunk.js",
-    "static/js/2.6fcd51ee.chunk.js.map": "/apodcalypse-frontend/static/js/2.6fcd51ee.chunk.js.map",
-    "index.html": "/apodcalypse-frontend/index.html",
-    "static/css/2.0e3290df.chunk.css.map": "/apodcalypse-frontend/static/css/2.0e3290df.chunk.css.map",
-    "static/css/main.08462110.chunk.css.map": "/apodcalypse-frontend/static/css/main.08462110.chunk.css.map",
-    "static/js/2.6fcd51ee.chunk.js.LICENSE.txt": "/apodcalypse-frontend/static/js/2.6fcd51ee.chunk.js.LICENSE.txt",
-    "static/media/semantic.css": "/apodcalypse-frontend/static/media/outline-icons.c5240512.woff2"
+    "main.css": "/static/css/main.260c8a28.chunk.css",
+    "main.js": "/static/js/main.6937c4ba.chunk.js",
+    "main.js.map": "/static/js/main.6937c4ba.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.e3364a0b.js",
+    "runtime-main.js.map": "/static/js/runtime-main.e3364a0b.js.map",
+    "static/css/2.c6ba63e8.chunk.css": "/static/css/2.c6ba63e8.chunk.css",
+    "static/js/2.b8ac6ab3.chunk.js": "/static/js/2.b8ac6ab3.chunk.js",
+    "static/js/2.b8ac6ab3.chunk.js.map": "/static/js/2.b8ac6ab3.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/2.c6ba63e8.chunk.css.map": "/static/css/2.c6ba63e8.chunk.css.map",
+    "static/css/main.260c8a28.chunk.css.map": "/static/css/main.260c8a28.chunk.css.map",
+    "static/js/2.b8ac6ab3.chunk.js.LICENSE.txt": "/static/js/2.b8ac6ab3.chunk.js.LICENSE.txt",
+    "static/media/semantic.css": "/static/media/outline-icons.c5240512.woff2"
   },
   "entrypoints": [
-    "static/js/runtime-main.1e99dce9.js",
-    "static/css/2.0e3290df.chunk.css",
-    "static/js/2.6fcd51ee.chunk.js",
-    "static/css/main.08462110.chunk.css",
-    "static/js/main.0db77c50.chunk.js"
+    "static/js/runtime-main.e3364a0b.js",
+    "static/css/2.c6ba63e8.chunk.css",
+    "static/js/2.b8ac6ab3.chunk.js",
+    "static/css/main.260c8a28.chunk.css",
+    "static/js/main.6937c4ba.chunk.js"
   ]
 }
