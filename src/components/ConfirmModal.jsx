@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
-import { useRecoilValue } from "recoil";
-import { Modal, Icon, Button, Header, Grid, Segment } from "semantic-ui-react";
+import { useState } from "react";
+import { Modal, Icon, Button } from "semantic-ui-react";
 
 // eslint-disable-next-line react/prop-types
 const ConfirmModal = ({ trigger, confirmCallback }) => {
@@ -27,13 +26,11 @@ const ConfirmModal = ({ trigger, confirmCallback }) => {
           <span> Confirm</span>
         </Modal.Header>
         <Modal.Content>
-          Action can&apos;t be reverted. Are you sure to proceed?
+          <p>Action can&apos;t be reverted. Are you sure to proceed?</p>
         </Modal.Content>
         <Modal.Actions>
-          <Button onClick={() => handleConfirmClick(false)} negative>
-            No
-          </Button>
-          <Button onClick={() => handleConfirmClick(true)} positive>
+          <Button onClick={() => handleConfirmClick(false)}>Cancel</Button>
+          <Button onClick={() => handleConfirmClick(true)} negative>
             Yes
           </Button>
         </Modal.Actions>

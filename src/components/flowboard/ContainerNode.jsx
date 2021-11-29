@@ -82,6 +82,15 @@ const ContainerNode = ({ data }) => (
 
         <Grid.Column>
           <Grid divided="vertically" textAlign="center">
+            <Grid.Row>
+              Connect Network
+              <LabelNodeHandle
+                type="source"
+                position="right"
+                id={data.id}
+                backgroundcolor="#57f281"
+              />
+            </Grid.Row>
             {Object.entries(data.networkSettings.Networks).flatMap(
               ([, value]) => {
                 if (value.NetworkID === "") return [];

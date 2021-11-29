@@ -6,7 +6,7 @@ const CustomHandle = styled(Handle)`
   position: absolute;
   width: 25px;
   height: calc(100% - 4px);
-  background-color: #718792;
+  background-color: ${({ backgroundcolor }) => backgroundcolor};
   border: medium none;
   transform: translateY(0px);
   top: 2px;
@@ -25,12 +25,19 @@ const CustomHandle = styled(Handle)`
   }}
 `;
 
-const CustomNodeHandle = ({ id, type, position, isConnectable = true }) => (
+const CustomNodeHandle = ({
+  id,
+  type,
+  position,
+  isConnectable = true,
+  backgroundcolor = "#718792",
+}) => (
   <CustomHandle
     position={position}
     id={id}
     type={type}
     isConnectable={isConnectable}
+    backgroundcolor={backgroundcolor}
   />
 );
 
@@ -39,10 +46,12 @@ CustomNodeHandle.propTypes = {
   type: PropTypes.string.isRequired,
   position: PropTypes.string.isRequired,
   isConnectable: PropTypes.bool,
+  backgroundcolor: PropTypes.string,
 };
 
 CustomNodeHandle.defaultProps = {
   isConnectable: true,
+  backgroundcolor: "#718792",
 };
 
 export default CustomNodeHandle;
