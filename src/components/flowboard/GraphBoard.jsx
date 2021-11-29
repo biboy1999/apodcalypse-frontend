@@ -92,6 +92,7 @@ const GraphBaord = () => {
   };
 
   const confirmList = (elements) => {
+    console.log(elements);
     if (!elements) return "";
     const containerNode = elements.filter(
       (element) => element.type === "container",
@@ -193,6 +194,7 @@ const GraphBaord = () => {
   // on selection change
   const setSelectedContainer = useSetRecoilState(selectedContainerState);
   const onSelectionChange = (e) => {
+    // setElementsToRemove(e);
     setSelectedContainer(
       (prev) => e?.filter((x) => x.type === "container")?.[0] ?? prev,
     );
@@ -207,6 +209,28 @@ const GraphBaord = () => {
     },
     [setPosX, setPosY],
   );
+
+  const onPaneClick = (e) => {
+    if (showMenu) setShowMenu(false);
+  };
+
+  const startContainer = (elements) => {
+    elements
+      .filter((e) => e.type === "container")
+      .forEach(({ data: { id } }) => {
+        containerSocket.emit("start", id, {});
+        toast.info(`🟢 Starting Container: ${id.substring(0, 12)}`);
+      });
+  };
+
+  const stopContainer = (elements) => {
+    elements
+      .filter((e) => e.type === "container")
+      .forEach(({ data: { id } }) => {
+        containerSocket.emit("stop", id, {});
+        toast.info(`🟥 Stopping Container: ${id.substring(0, 12)}`);
+      });
+  };
 
   useEffect(() => {
     if (
@@ -230,7 +254,8 @@ const GraphBaord = () => {
       onConnect={onConnect}
       onLoad={onLoad}
       onSelectionChange={onSelectionChange}
-      // onSelectionContextMenu={onSelectionContextMenu}
+      onSelectionContextMenu={onSelectionContextMenu}
+      onPaneClick={onPaneClick}
     >
       <Confirm
         open={confirmOpen}
@@ -246,7 +271,13 @@ const GraphBaord = () => {
         onCancel={() => setConfirmOpen(false)}
         onConfirm={() => elementRemove(elementsToRemove)}
       />
-      {/* <ContextMenu open={showMenu} posx={posX} posy={posY} /> */}
+      <ContextMenu
+        open={showMenu}
+        posx={posX}
+        posy={posY}
+        startContainer={() => startContainer(elementsToRemove)}
+        stopContainer={() => stopContainer(elementsToRemove)}
+      />
       <Controls style={{ left: "220px", bottom: "51px" }}>
         <ControlButton onClick={() => onLayout()}>
           <Icon name="project diagram" />
