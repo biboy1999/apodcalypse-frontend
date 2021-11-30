@@ -12,7 +12,6 @@ import { imagesListState } from "../../../recoil/Container";
 
 const ImagePanel = () => {
   const imageList = useRecoilValue(imagesListState);
-  // console.log(imageList);
   return (
     <>
       <div className="flex-box">

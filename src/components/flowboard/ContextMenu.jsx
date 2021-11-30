@@ -21,6 +21,7 @@ const ContextMenu = ({
   posy,
   startContainer,
   stopContainer,
+  deleteAll,
   //   deleteContainer,
   //   deleteNetwork,
 }) =>
@@ -30,24 +31,24 @@ const ContextMenu = ({
         <CustomMenu.Header>Container</CustomMenu.Header>
         <CustomMenu.Menu>
           <CustomMenu.Item onClick={startContainer}>
-            <ColorSpan color="Green">Start Selected</ColorSpan>
+            <ColorSpan color="Green">Start selected</ColorSpan>
           </CustomMenu.Item>
           <CustomMenu.Item onClick={stopContainer}>
-            <ColorSpan color="Orange">Stop Selected</ColorSpan>
+            <ColorSpan color="Orange">Stop selected</ColorSpan>
           </CustomMenu.Item>
           {/* <CustomMenu.Item onClick={() => deleteContainer}>
             <ColorSpan color="red">Delete Selected</ColorSpan>
           </CustomMenu.Item> */}
         </CustomMenu.Menu>
       </CustomMenu.Item>
-      {/* <CustomMenu.Item>
-        <CustomMenu.Header>Network</CustomMenu.Header>
+      <CustomMenu.Item>
+        <CustomMenu.Header>Action</CustomMenu.Header>
         <CustomMenu.Menu>
-          <CustomMenu.Item onClick={() => deleteNetwork()}>
-            <ColorSpan color="red">Delete Selected</ColorSpan>
+          <CustomMenu.Item onClick={deleteAll}>
+            <ColorSpan color="red">Delete selected</ColorSpan>
           </CustomMenu.Item>
         </CustomMenu.Menu>
-      </CustomMenu.Item> */}
+      </CustomMenu.Item>
     </CustomMenu>
   );
 

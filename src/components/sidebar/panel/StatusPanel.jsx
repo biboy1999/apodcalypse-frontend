@@ -27,7 +27,6 @@ const StatusPanel = () => {
   const selectedContainer = useRecoilValue(selectedContainerState);
   const containerUsage = useRecoilValue(containerUsageState);
 
-  console.log(statuslist);
   if (selectedContainer.data.id === statuslist.conatinerId) {
     statuslist.status.shift();
     statuslist.status.push({

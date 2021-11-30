@@ -114,16 +114,6 @@ const SidebarMenu = ({ selectedPanel }) => {
     });
   };
 
-  const handleMouseClickModel = (e, { _key }) => {
-    console.log("clicking");
-    // menuItems.find((x) => x.key === _key).panel(true);
-    // setSelectedMenuItem((prev) => {
-    //   if (prev.key === _key)
-    //     return { key: false, type: false, name: false, panel: null, icon: "" };
-    //   return menuItems.find((x) => x.key === _key);
-    // });
-  };
-
   const selectedContainer = useRecoilValue(selectedContainerState);
 
   return (
@@ -178,7 +168,6 @@ const SidebarMenu = ({ selectedPanel }) => {
               _key={item.key}
               name={item.name}
               active={selectedPanel === item.name}
-              onClick={handleMouseClickModel}
             >
               <div>
                 <Icon.Group>

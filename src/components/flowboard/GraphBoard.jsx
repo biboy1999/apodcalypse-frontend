@@ -6,6 +6,7 @@ import ReactFlow, {
   Background,
   ControlButton,
   useStoreState,
+  useStoreActions,
 } from "react-flow-renderer";
 import { Button, Confirm, Icon, Modal } from "semantic-ui-react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
@@ -47,6 +48,7 @@ const GraphBaord = () => {
   // reactflow state
   const nodes = useStoreState((state) => state.nodes);
   const edges = useStoreState((state) => state.edges);
+  const selectedElements = useStoreState((state) => state.selectedElements);
 
   const nodeHasDimension = (el) => el.__rf.width && el.__rf.height;
 
@@ -248,6 +250,8 @@ const GraphBaord = () => {
 
   return (
     <ReactFlow
+      maxZoom={2}
+      minZoom={0.1}
       elements={reactFlowElement}
       nodeTypes={nodeTypes}
       onElementsRemove={onElementsRemove}
@@ -277,13 +281,37 @@ const GraphBaord = () => {
         posy={posY}
         startContainer={() => startContainer(elementsToRemove)}
         stopContainer={() => stopContainer(elementsToRemove)}
+        deleteAll={() => onElementsRemove(selectedElements)}
       />
       <Controls style={{ left: "220px", bottom: "51px" }}>
         <ControlButton onClick={() => onLayout()}>
           <Icon name="project diagram" />
         </ControlButton>
       </Controls>
-      <MiniMap style={{ left: "10px", bottom: "10px" }} />
+      <MiniMap
+        style={{ left: "10px", bottom: "10px" }}
+        nodeColor={(node) => {
+          switch (node.type) {
+            case "container":
+              return "#d6e2ff";
+            case "network":
+              return "#99ff9c";
+            default:
+              return "#ffffff";
+          }
+        }}
+        nodeStrokeColor={(node) => {
+          switch (node.type) {
+            case "container":
+              return "#6b96ff";
+            case "network":
+              return "#4dff52";
+            default:
+              return "#ffffff";
+          }
+        }}
+        nodeStrokeWidth={20}
+      />
       <Background color="#aaa" gap={16} />
     </ReactFlow>
   );
