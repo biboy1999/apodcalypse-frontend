@@ -1,12 +1,9 @@
 import ReactFlow, {
-  removeElements,
-  addEdge,
   MiniMap,
   Controls,
   Background,
   ControlButton,
   useStoreState,
-  useStoreActions,
 } from "react-flow-renderer";
 import { Button, Confirm, Icon, Modal } from "semantic-ui-react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
@@ -57,11 +54,6 @@ const GraphBaord = () => {
     setGraphPosition(Object.assign({}, ...result));
   };
 
-  const onElementsRemove = (elements) => {
-    setConfirmOpen(true);
-    setElementsToRemove(elements);
-  };
-
   const elementRemove = (elements) => {
     if (!elements) return;
     setConfirmOpen(false);
@@ -94,7 +86,6 @@ const GraphBaord = () => {
   };
 
   const confirmList = (elements) => {
-    console.log(elements);
     if (!elements) return "";
     const containerNode = elements.filter(
       (element) => element.type === "container",
@@ -182,6 +173,11 @@ const GraphBaord = () => {
     [elementsToRemove],
   );
 
+  const onElementsRemove = (elements) => {
+    setElementsToRemove(elements);
+    setConfirmOpen(true);
+  };
+
   const onConnect = (link) => {
     console.log(link);
     networkSocket.emit("container_connect", link.source, link.target);
@@ -196,10 +192,14 @@ const GraphBaord = () => {
   // on selection change
   const setSelectedContainer = useSetRecoilState(selectedContainerState);
   const onSelectionChange = (e) => {
-    // setElementsToRemove(e);
-    setSelectedContainer(
-      (prev) => e?.filter((x) => x.type === "container")?.[0] ?? prev,
-    );
+    // data.name data.id
+    const firstElements = e?.filter((x) => x.type === "container")?.[0];
+    if (firstElements) {
+      const clonedData = {
+        data: { id: firstElements.data.id, name: firstElements.data.name },
+      };
+      setSelectedContainer((prev) => clonedData ?? prev);
+    }
   };
 
   const onSelectionContextMenu = useCallback(
@@ -212,7 +212,7 @@ const GraphBaord = () => {
     [setPosX, setPosY],
   );
 
-  const onPaneClick = (e) => {
+  const onPaneClick = () => {
     if (showMenu) setShowMenu(false);
   };
 
@@ -254,9 +254,9 @@ const GraphBaord = () => {
       minZoom={0.1}
       elements={reactFlowElement}
       nodeTypes={nodeTypes}
-      onElementsRemove={onElementsRemove}
       onConnect={onConnect}
       onLoad={onLoad}
+      onElementsRemove={(e) => onElementsRemove(e)}
       onSelectionChange={onSelectionChange}
       onSelectionContextMenu={onSelectionContextMenu}
       onPaneClick={onPaneClick}
@@ -279,8 +279,8 @@ const GraphBaord = () => {
         open={showMenu}
         posx={posX}
         posy={posY}
-        startContainer={() => startContainer(elementsToRemove)}
-        stopContainer={() => stopContainer(elementsToRemove)}
+        startContainer={() => startContainer(selectedElements)}
+        stopContainer={() => stopContainer(selectedElements)}
         deleteAll={() => onElementsRemove(selectedElements)}
       />
       <Controls style={{ left: "220px", bottom: "51px" }}>
@@ -295,7 +295,7 @@ const GraphBaord = () => {
             case "container":
               return "#d6e2ff";
             case "network":
-              return "#99ff9c";
+              return "#e494ff";
             default:
               return "#ffffff";
           }
@@ -303,9 +303,10 @@ const GraphBaord = () => {
         nodeStrokeColor={(node) => {
           switch (node.type) {
             case "container":
-              return "#6b96ff";
+              return node.data.status === "running" ? "#3dff12" : "#ff6666";
+            // return "#6b96ff";
             case "network":
-              return "#4dff52";
+              return "#e494ff";
             default:
               return "#ffffff";
           }

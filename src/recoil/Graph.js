@@ -108,7 +108,7 @@ const graphElementState = selector({
 
     const positionedNodes = graphNodes.map((node) => {
       const position = graphPosition[node.id] ?? { position: { x: 0, y: 0 } };
-      //  possiable point
+
       return { ...node, ...position };
     });
 

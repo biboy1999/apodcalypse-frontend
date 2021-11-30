@@ -42,6 +42,7 @@ const Main = () => {
 
   const [isConnected, setIsConnected] = useState(false);
 
+  // container listener
   useEffect(() => {
     const wsContainer = io("http://127.0.0.1:4636/containers");
 
@@ -54,17 +55,27 @@ const Main = () => {
       setIsConnected(false);
     });
 
+    let waitList = false;
     const listTimer = setInterval(() => {
-      wsContainer.volatile.emit("list", { all: true }, (ack) => {
-        setContainerListState(ack);
-      });
-    }, 5000);
+      if (!waitList) {
+        wsContainer.emit("list", { all: true }, (ack) => {
+          setContainerListState(ack);
+          waitList = false;
+        });
+        waitList = true;
+      }
+    }, 1000);
 
+    let waitStats = false;
     const statsTimer = setInterval(() => {
-      wsContainer.volatile.emit("list_stats", (ack) => {
-        setContainerStatsListState(ack);
-      });
-    }, 7000);
+      if (!waitStats) {
+        wsContainer.emit("list_stats", (ack) => {
+          setContainerStatsListState(ack);
+          waitStats = false;
+        });
+        waitStats = true;
+      }
+    }, 1000);
 
     setContainerSocket(wsContainer);
 
@@ -75,17 +86,23 @@ const Main = () => {
     };
   }, []);
 
+  // network listener
   useEffect(() => {
     const wsNetwork = io("http://127.0.0.1:4636/networks");
     wsNetwork.on("connect", () => {
       console.log(wsNetwork.id);
     });
 
+    let waitList = false;
     const listTimer = setInterval(() => {
-      wsNetwork.volatile.emit("list", {}, (ack) => {
-        setContainerNetworkListState(ack);
-      });
-    }, 3000);
+      if (!waitList) {
+        wsNetwork.emit("list", {}, (ack) => {
+          setContainerNetworkListState(ack);
+          waitList = false;
+        });
+        waitList = true;
+      }
+    }, 1000);
 
     setNetworksSocket(wsNetwork);
 
@@ -95,17 +112,23 @@ const Main = () => {
     };
   }, []);
 
+  // image listener
   useEffect(() => {
     const wsImage = io("http://127.0.0.1:4636/images");
     wsImage.on("connect", () => {
       console.log(wsImage.id);
     });
 
+    let waitList = false;
     const listTimer = setInterval(() => {
-      wsImage.volatile.emit("list", (ack) => {
-        setImagesListState(ack);
-      });
-    }, 4000);
+      if (!waitList) {
+        wsImage.emit("list", (ack) => {
+          setImagesListState(ack);
+          waitList = false;
+        });
+        waitList = true;
+      }
+    }, 1000);
 
     setImagesSocket(wsImage);
 
@@ -115,6 +138,7 @@ const Main = () => {
     };
   }, []);
 
+  // recipe listener
   useEffect(() => {
     const wsRecipe = io("http://127.0.0.1:4636/recipes");
     wsRecipe.on("connect", () => {
