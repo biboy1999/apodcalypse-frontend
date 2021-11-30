@@ -69,9 +69,11 @@ const Main = () => {
     let waitStats = false;
     const statsTimer = setInterval(() => {
       if (!waitStats) {
+        // console.time("stats");
         wsContainer.emit("list_stats", (ack) => {
           setContainerStatsListState(ack);
           waitStats = false;
+          // console.timeEnd("stats");
         });
         waitStats = true;
       }

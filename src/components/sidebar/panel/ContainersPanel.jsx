@@ -41,7 +41,7 @@ const ContainersPanel = () => {
   const deleteContainer = (confirm) => {
     if (!confirm) return;
     selectedContainersId.forEach((id) => {
-      containerSocket.emit("remove", id);
+      containerSocket.emit("remove", id, { force: true });
       toast.info(`🗑️ Removing Container: ${id.substring(0, 12)}`);
     });
     selectedContainersId.clear();

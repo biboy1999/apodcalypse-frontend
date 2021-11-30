@@ -68,7 +68,7 @@ const GraphBaord = () => {
     );
 
     containerNode.forEach((c) => {
-      containerSocket.emit("remove", c.data.id);
+      containerSocket.emit("remove", c.data.id, { force: true });
       toast.info(`🗑️ Removing Container: ${c.data.id.substring(0, 12)}`);
     });
 
@@ -175,6 +175,7 @@ const GraphBaord = () => {
 
   const onElementsRemove = (elements) => {
     setElementsToRemove(elements);
+    setShowMenu(false);
     setConfirmOpen(true);
   };
 
@@ -217,6 +218,7 @@ const GraphBaord = () => {
   };
 
   const startContainer = (elements) => {
+    setShowMenu(false);
     elements
       .filter((e) => e.type === "container")
       .forEach(({ data: { id } }) => {
@@ -226,6 +228,7 @@ const GraphBaord = () => {
   };
 
   const stopContainer = (elements) => {
+    setShowMenu(false);
     elements
       .filter((e) => e.type === "container")
       .forEach(({ data: { id } }) => {

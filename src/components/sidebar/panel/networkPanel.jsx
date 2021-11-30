@@ -28,7 +28,7 @@ const ImagePanel = () => {
   const deleteNetowrk = (confirm) => {
     if (!confirm) return;
     selectedNetowrksId.forEach((id) => {
-      networkSocket.emit("remove", id);
+      networkSocket.emit("remove", id, { force: true });
       toast.info(`🗑️ Removing Network: ${id.substring(0, 12)}`);
     });
     selectedNetowrksId.clear();
